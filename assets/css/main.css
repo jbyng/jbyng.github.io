@@ -1758,9 +1758,8 @@ input, select, textarea {
 	ul#test {
 		list-style-type: none;
 		padding-left: 1em;
-		padding: 20px;
+		padding: 1em;
 		display: inline-block;
-		width: 1.5em;
 	}
 
 		ul li {
