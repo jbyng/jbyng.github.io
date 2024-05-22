@@ -1751,7 +1751,7 @@ input, select, textarea {
 		list-style: none;
 		list-style-type: none;
 		padding-left: 1em;
-		padding: 20px;
+		padding: 1em;
 		display: inline-block;
 	}
 
