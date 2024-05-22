@@ -1749,6 +1749,7 @@ input, select, textarea {
 
 	ul {
 		list-style: none;
+		list-style-type: none;
 		padding-left: 1em;
 		padding: 20px;
 		display: inline-block;
