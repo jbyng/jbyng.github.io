@@ -1756,10 +1756,12 @@ input, select, textarea {
 		width: 1.5em;
 	}
 	ul#test {
+		list-style: none;
 		list-style-type: none;
 		padding-left: 1em;
 		padding: 1em;
 		display: inline-block;
+		width: 1.5em;
 	}
 
 		ul li {
