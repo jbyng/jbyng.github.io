@@ -1753,6 +1753,7 @@ input, select, textarea {
 		padding-left: 1em;
 		padding: 1em;
 		display: inline-block;
+		width: 1.5em;
 	}
 
 		ul li {
