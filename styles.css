@@ -1,59 +1,208 @@
-
-* {
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    height: 100vh;
+    width: 100%;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+h1 {
+    flex: 1;
+    text-align: center;
+    margin: 20px;
+    font-family: "Quicksand", serif;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-}
-
-header h1 {
-    margin-bottom: 10px;
-}
-
-nav ul {
-    list-style: none;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 15px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-section {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+    border: 2px solid;
+    margin-top: 10px;
+    border-radius: 20px;
     padding: 20px;
-    margin: 20px 0;
 }
 
-section h2 {
-    margin-bottom: 10px;
+.boxes {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+    flex-wrap: wrap;
 }
 
-section p, section ul {
-    margin-bottom: 10px;
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 200px;
+    height: 150px;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+.box:hover {
+    transform: translateY(-5px);
+}
+
+.info-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.climb-photo {
+    width: 300px;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.personal {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 300px;
+    transition: transform 0.3s ease;
+    text-align: left;
+}
+
+.personal:hover {
+    transform: translateY(-5px);
+}
+
+
+/* education section */
+.education {
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.education h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: "Quicksand", sans-serif;
+}
+
+.education-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.edu-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 300px;
+    transition: transform 0.3s ease;
+    text-align: left;
+}
+
+.edu-card:hover {
+    transform: translateY(-5px);
+}
+
+.edu-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.edu-card p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
+}
+
+/* skills section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 40px 0;
+}
+
+.skill-card {
+
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #c3d5e9;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-title {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+.card-title i {
+    font-size: 1.5em;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-item {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    border: 1px solid #a4b1c0;
+    transition: transform 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateY(-5px);
+}
+
+.skill-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.skill-card:nth-child(1) .card-title { color: #58a6ff; } /* Backend Dev (blue) */
+.skill-card:nth-child(2) .card-title { color: #8bc34a; } /* Research Skills (green) */
+.skill-card:nth-child(3) .card-title { color: #e38b09; } /* IDEs and Tools (orange) */
+.skill-card:nth-child(4) .card-title { color: #e03232; } /* Creative Skills (red) */
 
 footer {
+    margin-top: auto;
+    width: 100%;
     text-align: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    margin-top: 20px;
+    border: 2px solid;
+    padding: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr; /* Stack cards on smaller screens */
+        margin: 10px;
+    }
 }

@@ -9,39 +9,150 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <header>
-        <h1>Welcome to My Personal Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <h1>Erica Ocbu</h1>
     </header>
+    
+    <div class="boxes">
+        <a href="#about" class="box">About Me</a>
+        <a href="#projects" class="box">Projects</a>
+        <a href="#experience" class="box">Work Experience</a>
+    </div>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I made this without the help of Erica Ocbu.</p>
+    <div id="about">
+        <h1>About Me</h1>
+        
+        <div class="info-wrapper">
+            <div class="personal">
+                <p><strong>Climbing Stuff....</strong></p>
+                <p>fake climbing info box....</p>
+            </div>
+            <img src="images/IMG_5908.JPG" alt="Fake Climbing Photo" class="climb-photo">
+        </div>
+       
+        <!-- education section starts -->
+        <section class="education" id="education">
+            <h2>Education</h2>
+            <div class="education-container">
+                <div class="edu-card">
+                    <h3>University of North Carolina at Asheville</h3>
+                    <p><strong>Year:</strong> 2023-2024</p>
+                    <p><strong>Degree: </strong>Computer Science B.S.</p>
+                    <p><strong>GPA:</strong> 3.98</p>
+                    <p><strong>Extracurriculars:</strong> Sigma Nu Scholarship Chair, President and Founder of Climbing Club, Founder of Engineering Club, Computer Science Undergraduate Research w/ Dr. Farzana Rashid, VP of Diversity, Equity, and Inclusion in the Inter-Greek Council</p>
+                </div>
+
+                <div class="edu-card">
+                    <h3>North Carolina State University</h3>
+                    <p><strong>Year:</strong> 2023-2027</p>
+                    <p><strong>Degree: </strong>Computer Science B.S.</p>
+                    <p><strong>GPA:</strong> 4.0</p>
+                    <p><strong>Courses:</strong> Machine Learning, Linear Algebra, Data Structures, Algorithms, Software Development Fundamentals, Calculus I-III, Calculus-Based Statistics, Discrete Mathematics, Object Oriented Programming, Computing Environments</p>
+                    <p><strong>Extracurriculars:</strong> Pack Climbing - Treasurer</p>
+                </div>
+            </div>
+        </section>
+    
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3 class="card-title"> Backend Development</h3>
+                <div class="skills-list" id="backend-skills-container">
+                    </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="card-title"> Data Analytics</h3>
+                <div class="skills-list" id="research-skills-container">
+                    </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="card-title"> IDEs and Tools</h3>
+                <div class="skills-list" id="tools-skills-container">
+                    </div>
+            </div>
+
+            <div class="skill-card">
+                <h3 class="card-title"> Creative Skills</h3>
+                <div class="skills-list" id="creative-skills-container">
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+    <section id="publications">
+        <h2>Publications</h2>
     </section>
 
     <section id="projects">
         <h2>My Projects</h2>
-        <ul>
-            <li>NASA Internship Data Science Project</li>
-            <li>Machine Learning Analysis for Games</li>
-            <li>PyTorch Neural Network Model for Travel Research</li>
-        </ul>
+    </section>
+
+    <section id="experience">
+        <h2>Work Experience</h2>
     </section>
 
     <section id="contact">
         <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:jamesyang@example.com">jbyang2@ncsu.edu/a></p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/james-yang-3a3a6228b" target="_blank">James Yang</a></p>
+        <p><b>Email: </b><a href="mailto:jamesyang@example.com">jbyang2@ncsu.edu</a></p>
+        <p><a href="https://www.linkedin.com/in/james-yang-3a3a6228b">LinkedIn</a></p>
     </section>
 
     <footer>
-        <p>&copy; 2024 James Yang. All Rights Reserved.</p>
+        <p>&copy; 2024 James Yang. All Rights Reserved. <strong>Made with Anger by James</strong></p>
     </footer>
+
+
+    <script>
+    // Fetch skills.json
+    fetch('skills.json')
+      .then(response => response.json())
+      .then(data => {
+        // Function to populate a specific container
+        const populateSkills = (containerId, category) => {
+          const container = document.getElementById(containerId);
+          // Ensure container exists before trying to append children
+          if (!container) {
+              console.error(`Container with ID '${containerId}' not found.`);
+              return; // Exit if container doesn't exist
+          }
+
+          const categorySkills = data.skills.filter(skill => skill.category === category);
+
+          categorySkills.forEach(skill => {
+            const skillItem = document.createElement('span');
+            skillItem.className = 'skill-item';
+
+            // Create the image element for the icon
+            const skillIcon = document.createElement('img');
+            skillIcon.src = skill.icon; // Set the source from your JSON
+            skillIcon.alt = `${skill.name} icon`; // Alt text for accessibility
+            skillIcon.className = 'skill-icon'; // Add a class for styling
+
+            // Create the text node for the skill name
+            const skillNameText = document.createTextNode(skill.name);
+
+            // Append the icon and then the name to the skill item
+            skillItem.appendChild(skillIcon);
+            skillItem.appendChild(skillNameText);
+
+            container.appendChild(skillItem);
+          });
+        };
+
+        // Call populateSkills for each category
+        populateSkills('frontend-skills-container', 'Frontend Development');
+        populateSkills('backend-skills-container', 'Backend Development');
+        populateSkills('uiux-skills-container', 'UI/UX Design');
+        populateSkills('cloud-devops-skills-container', 'Cloud & DevOps');
+        populateSkills('tools-skills-container', 'IDEs and Tools');
+        populateSkills('creative-skills-container', 'Creative Skills');
+
+      })
+      .catch(error => console.error('Error loading skills:', error));
+</script>
+
 </body>
 </html>

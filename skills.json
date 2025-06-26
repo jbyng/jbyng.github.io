@@ -1,0 +1,25 @@
+{
+    "skills": [
+        {
+            "name": "Java",
+            "category": "Backend Development",
+            "icon": "https://img.icons8.com/color/512/java-coffee-cup-logo.png"
+        },
+        {
+            "name": "Python",
+            "category": "Backend Development",
+            "icon": "https://images.icon-icons.com/2699/PNG/512/python_logo_icon_168886.png"
+        },
+        {
+            "name": "GitHub",
+            "category": "IDEs and Tools",
+            "icon": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
+        },
+        {
+            "name": "VSCode",
+            "category": "IDEs and Tools",
+            "icon": "https://images.icon-icons.com/2107/PNG/512/file_type_vscode_icon_130084.png"
+        }
+
+    ]
+}
