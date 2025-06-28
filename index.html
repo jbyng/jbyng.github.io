@@ -11,11 +11,12 @@
 <body>
     
     <header>
-        <h1>Erica Ocbu</h1>
+        <h1>James Yang</h1>
     </header>
     
     <div class="boxes">
         <a href="#about" class="box">About Me</a>
+        <a href="#research" class="box">Research</a>
         <a href="#projects" class="box">Projects</a>
         <a href="#experience" class="box">Work Experience</a>
     </div>
@@ -31,7 +32,7 @@
             <img src="images/IMG_5908.JPG" alt="Fake Climbing Photo" class="climb-photo">
         </div>
        
-        <!-- education section starts -->
+        <!-- education section -->
         <section class="education" id="education">
             <h2>Education</h2>
             <div class="education-container">
@@ -53,41 +54,108 @@
                 </div>
             </div>
         </section>
-    
-        <div class="skills-grid">
-            <div class="skill-card">
-                <h3 class="card-title"> Backend Development</h3>
-                <div class="skills-list" id="backend-skills-container">
-                    </div>
-            </div>
 
-            <div class="skill-card">
-                <h3 class="card-title"> Data Analytics</h3>
-                <div class="skills-list" id="research-skills-container">
-                    </div>
-            </div>
+        <!-- skills section -->
+        <section class="skills" id="skills">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3 class="card-title"> Programming Languages</h3>
+                    <div class="skills-list" id="programming-skills-container">
+                        </div>
+                </div>
 
-            <div class="skill-card">
-                <h3 class="card-title"> IDEs and Tools</h3>
-                <div class="skills-list" id="tools-skills-container">
-                    </div>
-            </div>
+                <div class="skill-card">
+                    <h3 class="card-title"> Data Analytics</h3>
+                    <div class="skills-list" id="research-skills-container">
+                        </div>
+                </div>
 
-            <div class="skill-card">
-                <h3 class="card-title"> Creative Skills</h3>
-                <div class="skills-list" id="creative-skills-container">
-                    </div>
+                <div class="skill-card">
+                    <h3 class="card-title"> IDEs and Tools</h3>
+                    <div class="skills-list" id="tools-skills-container">
+                        </div>
+                </div>
             </div>
+        </section>
+    </div>
 
+    <!-- Publications Section -->
+    <div class="pub-container" id="research">
+        <h1>Research</h1>
+
+        <div class="pub-grid">
+            <!-- Card 1 -->
+            <div class="pub-card">
+                <div class="pub-image-container">
+                    <img src="images/IMG_5908.JPG" alt="Publication Image" class="pub-image">
+                </div>
+                <div class="pub-card-content">
+                    <div class="pub-tags-container">
+                        <span class="pub-tag">Journal Article</span>
+                        <span class="pub-tag">Topic</span>
+                        <span class="pub-tag">Topic</span>
+                    </div>
+                    <h3>Article Title</h3>
+                    <p class="pub-card-description">
+                        Article description.
+                    </p>
+                    <div class="pub-card-footer">
+                        <a href="#" class="pub-button">
+                            View Paper
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="pub-card">
+                <div class="pub-image-container">
+                    <img src="images/IMG_5908.JPG" alt="Publication Image" class="pub-image">
+                </div>
+                <div class="pub-card-content">
+                    <div class="pub-tags-container">
+                        <span class="pub-tag">Journal Article</span>
+                        <span class="pub-tag">Topic</span>
+                        <span class="pub-tag">Topic</span>
+                    </div>
+                    <h3>Article Title</h3>
+                    <p class="pub-card-description">
+                        Article Description.
+                    </p>
+                    <div class="pub-card-footer">
+                        <a href="#" class="pub-button">
+                            View Paper
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="pub-card">
+                <div class="pub-image-container">
+                    <img src="images/IMG_5908.JPG" alt="Publication Image" class="pub-image">
+                </div>
+                <div class="pub-card-content">
+                    <div class="pub-tags-container">
+                        <span class="pub-tag">Journal Article</span>
+                        <span class="pub-tag">Topic</span>
+                        <span class="pub-tag">Topic</span>
+                    </div>
+                    <h3>Article Title</h3>
+                    <p class="pub-card-description">
+                        Article Description.
+                    </p>
+                    <div class="pub-card-footer">
+                        <a href="#" class="pub-button">
+                            View Paper
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <section id="publications">
-        <h2>Publications</h2>
-    </section>
-
     <section id="projects">
-        <h2>My Projects</h2>
+        <h2>Projects</h2>
     </section>
 
     <section id="experience">
@@ -106,17 +174,15 @@
 
 
     <script>
-    // Fetch skills.json
     fetch('skills.json')
       .then(response => response.json())
       .then(data => {
-        // Function to populate a specific container
+        // function to populate a specific container
         const populateSkills = (containerId, category) => {
           const container = document.getElementById(containerId);
-          // Ensure container exists before trying to append children
           if (!container) {
               console.error(`Container with ID '${containerId}' not found.`);
-              return; // Exit if container doesn't exist
+              return; // exit if container doesn't exist
           }
 
           const categorySkills = data.skills.filter(skill => skill.category === category);
@@ -125,16 +191,16 @@
             const skillItem = document.createElement('span');
             skillItem.className = 'skill-item';
 
-            // Create the image element for the icon
+            // create the image element for the icon
             const skillIcon = document.createElement('img');
-            skillIcon.src = skill.icon; // Set the source from your JSON
-            skillIcon.alt = `${skill.name} icon`; // Alt text for accessibility
-            skillIcon.className = 'skill-icon'; // Add a class for styling
+            skillIcon.src = skill.icon;
+            skillIcon.alt = `${skill.name} icon`;
+            skillIcon.className = 'skill-icon';
 
-            // Create the text node for the skill name
+            // create the text node for the skill name
             const skillNameText = document.createTextNode(skill.name);
 
-            // Append the icon and then the name to the skill item
+            // append the icon and then the name to the skill item
             skillItem.appendChild(skillIcon);
             skillItem.appendChild(skillNameText);
 
@@ -143,12 +209,9 @@
         };
 
         // Call populateSkills for each category
-        populateSkills('frontend-skills-container', 'Frontend Development');
-        populateSkills('backend-skills-container', 'Backend Development');
-        populateSkills('uiux-skills-container', 'UI/UX Design');
-        populateSkills('cloud-devops-skills-container', 'Cloud & DevOps');
+        populateSkills('programming-skills-container', 'Programming Language');
+        populateSkills('research-skills-container', 'Data Analytics');
         populateSkills('tools-skills-container', 'IDEs and Tools');
-        populateSkills('creative-skills-container', 'Creative Skills');
 
       })
       .catch(error => console.error('Error loading skills:', error));
