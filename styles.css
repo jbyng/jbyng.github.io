@@ -17,6 +17,7 @@ h1 {
 
 header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     width: 100%;
     padding: 20px;
@@ -388,6 +389,12 @@ footer {
     border-radius: 20px;
 }
 
+#contact {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
