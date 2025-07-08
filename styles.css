@@ -479,16 +479,60 @@ footer {
     width: 100%;
     text-align: center;
     border: 1px solid;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 20px;
 }
 
 #contact {
+    display: flex;
+    flex-direction: column;
     margin-top: auto;
     width: 100%;
     text-align: center;
-    padding: 20px;
+    align-items: center;
+}
+
+.email-button {
+    background-color: #d9534f;
+    display: flex;
+    align-items: center;
+    width: 70px;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.linkedin-button {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    background-color: #0077B5;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.linkedin-button:hover {
+    color: #ffffff;
+    background-color: #005582;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.linkedin-button svg,
+.email-button svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 /* Responsive adjustments */
