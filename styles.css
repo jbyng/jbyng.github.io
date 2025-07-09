@@ -13,6 +13,7 @@ h1 {
     text-align: center;
     margin: 20px;
     font-family: "Quicksand", serif;
+    padding: 3rem 2rem;
 }
 
 header {
@@ -36,11 +37,11 @@ header {
 .initial-view-container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Vertically center content */
-    align-items: center; /* Horizontally center content */
+    justify-content: center;
+    align-items: center;
     min-height: 100vh; /* Take up at least the full viewport height */
     width: 100%;
-    padding: 20px; /* Some padding around the content */
+    padding: 20px;
     box-sizing: border-box;
 }
 
@@ -523,6 +524,13 @@ footer {
 .linkedin-button:hover {
     color: #ffffff;
     background-color: #005582;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.email-button:hover {
+    color: #ffffff;
+    background-color: #b4423e;
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
