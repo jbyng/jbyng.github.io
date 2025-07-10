@@ -598,6 +598,7 @@ footer {
 
 @media (max-width: 480px) {
     .box {
-    width: 100%;
+    width: calc(50% - 15px);
+    margin-bottom: 20px;
     }
 }
