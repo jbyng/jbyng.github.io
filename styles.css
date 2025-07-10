@@ -13,7 +13,6 @@ h1 {
     text-align: center;
     margin: 20px;
     font-family: "Quicksand", serif;
-    padding: 3rem 2rem;
 }
 
 header {
@@ -39,7 +38,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Take up at least the full viewport height */
+    min-height: 100vh;
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
@@ -331,14 +330,42 @@ header {
     align-self: center;
 }
 
+.project {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: flex-start; 
+    margin-bottom: 40px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 100%;
+    gap: 20px; 
+    padding: 20px; 
+    box-sizing: border-box; 
+    text-align: left;
+}
+
+.project .image { 
+    flex-shrink: 0; 
+    margin-right: 30px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
 .project img {
     max-width: 200px;
-    height: 100%;
-    display: block;
-    margin: 20px;
-    flex-wrap: wrap;
+    height: auto;
     border-radius: 10px;
+    display: block; 
 }
+
+.project-info {
+    flex-grow: 1;
+    padding: 10px; 
+}
+
 
 .project-info .button {
     display: inline-block;
@@ -347,26 +374,13 @@ header {
     margin: 10px;
 }
 
-.project {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-    gap: 20px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 20px;
-    width: 100%;
+.project .button img {
+    width: 24px;
+    height: 24px;
+    max-width: none; 
+    margin: 0;
 }
 
-.project-info {
-    align-items: center;
-    justify-self: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: 20px;
-}
 
 figure {
     display: flex;
@@ -453,6 +467,7 @@ figure {
     position: relative;
     padding-left: 25px;
     color: #555;
+    padding-left: 10px;
 }
 
 .experience-card ul li:last-child {
@@ -560,8 +575,18 @@ footer {
     }
 
     .project {
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: flex-start;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .project .image {
+        margin-bottom: 20px;
+        
+    }
+
+    .project-info {
+        margin-top: 0;
     }
 }
