@@ -590,12 +590,8 @@ footer {
         margin-top: 0;
     }
 
-    .boxes {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 40px 0;
-    flex-wrap: wrap;
-    margin-top: 0;
+    .box {
+    width: 45%;
+    margin-bottom: 20px;
     }
 }
