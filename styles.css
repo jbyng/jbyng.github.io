@@ -595,3 +595,9 @@ footer {
     margin-bottom: 20px;
     }
 }
+
+@media (max-width: 480px) {
+    .box {
+    width: 100%;
+    }
+}
