@@ -589,11 +589,6 @@ footer {
     .project-info {
         margin-top: 0;
     }
-
-    .box {
-    width: 45%;
-    margin-bottom: 20px;
-    }
 }
 
 @media (max-width: 480px) {
