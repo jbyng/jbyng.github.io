@@ -69,6 +69,27 @@ header:hover {
     transform: translateY(-5px);
 }
 
+.single-button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 15px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.wide-button {
+    width: 100%; 
+    max-width: 900px;
+    max-height: 70%;
+    color: black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wide-button:hover {
+    transform: translateY(-5px);
+}
+
 .info-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -497,13 +518,44 @@ figure {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 or more columns */
 }
 
-/* Blog Section Styling */
+/* Blog Section */
+.blog-nav {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    gap: 10px;
+}
+
+.blog-nav .nav-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 25px;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 5px 15px;
+}
+
+.blog-nav .nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
 #blog {
     margin-top: 80px;
     width: 90%;
     max-width: 1000px;
     padding: 40px;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     text-align: center;
