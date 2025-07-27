@@ -29,12 +29,12 @@
         </div>
     </div>
 
-    <div id="about">
+    <div id="about" class="reveal">
         <h1>About Me</h1>
         <div class="info-wrapper">
             <div class="personal">
                 <p><strong>Welcome to my website!</strong></p>
-                <p>I'm a junior majoring in computer science and minoring in statistics at NC State University (go pack!), and I'm deeply passionate about applied machine learning research, most recently in medicine and pharmacology. When I'm not doing research, I invest my time in rock climbing via competing and coaching the NCSU Competitive Rock Climbing Team. I have competed in both the North American Cup Series for Bouldering and Sport & Bouldering Combined Nationals.</p>
+                <p>I'm a junior majoring in computer science and minoring in statistics at NC State University (go pack!), and I'm deeply passionate about applied machine learning research, most recently in medicine and computational biology. When I'm not doing research, I invest my time in rock climbing via competing and coaching the NCSU Competitive Rock Climbing Team. I have competed in the North American Cup Series for Bouldering, as well as Sport & Bouldering Combined Nationals.</p>
             </div>
             <img src="images/bryce1.JPG" alt="Fake Climbing Photo" class="climb-photo">
         </div>
@@ -292,6 +292,24 @@
       })
       .catch(error => console.error('Error loading skills:', error));
 </script>
+<script>
+  // Reveal elements when they enter the viewport
+  function revealOnScroll() {
+    const reveals = document.querySelectorAll('.reveal');
+    const windowHeight = window.innerHeight;
+    
+    reveals.forEach(el => {
+      const elementTop = el.getBoundingClientRect().top;
+      const revealPoint = 100;
 
+      if (elementTop < windowHeight - revealPoint) {
+        el.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll); // in case it's already in view on load
+</script>
 </body>
 </html>
