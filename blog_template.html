@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Perspective: A Domain Analysis of XAI</title>
+  <link rel="icon" type="image/png" href="/images/helloworld2-removebg-preview.png">
   <link rel="stylesheet" href="styles.css">
   <style>
 
@@ -25,9 +26,18 @@
       margin: 0;
     }
     .articlesection {
-        padding: 10px 10%;
+        padding: 10px 30%;
         border-top: 1px solid var(--line);
         margin: 0;
+        
+    }
+    @media (max-width: 600px) {
+       .articlesection {
+            padding: 10px 8%;
+            border-top: 1px solid var(--line);
+            margin: 0;
+        
+        } 
     }
 
     .section:first-child {
@@ -122,7 +132,7 @@
     <!-- Title -->
     <header class="section">
       <div class="header-inner">
-        <h1>Perspective: A Domain Analysis of XAI</h1>
+        <h1>Perspective: A Domain Analysis of Explainable Artificial Intelligence</h1>
         <div class="meta">
             <span>By <strong>James B Yang</strong></span>
             <span><time datetime="2025-10-25">October 25, 2025</time></span>
@@ -144,27 +154,90 @@
 
         </p>
 
-        <h2>Section Heading</h2>
+        <h2>What is Explainable Artificial Intelligence (XAI)?</h2>
+        <p class="first-line-indent">
+            At a high level, XAI is defined by IBM as "a set of processes and methods that allow humans to comprehend 
+            and trust the results and output created by machine learning algorithms" [1]. This is an important step in 
+            overcoming the limitations imposed by the black-box nature of machine learning. Without understanding the 
+            underlying mechanisms that lead to the decisions of these models, we, as a population, become apprehensive 
+            about relying on these tools for matters of health, security, and safety -- and rightfully so. According 
+            to Derek Doran et al. [2], all of these models can be divided into four tiers of explainability: Opaque, 
+            interpretable, comprehensible, and explainable. 
+        </p>
+        <h3>Opaque Systems</h3>
+        <p class="first-line-indent">
+            These are models in which the inner workings are entirely invisible to the user. In [2], the author humorously 
+            described this category of models as "an oracle that makes predictions over an input, without indicating how 
+            and why predictions are made." This category also applies to models in which the weights and biases decided by 
+            the model are visible, but carry no translatable meaning that betters model interpretability. The majority of 
+            neural networks are within this group of systems.
+        </p>
+        <h3>Interpretable Systems</h3>
+        <p class="first-line-indent">
+            This category describes models that not only have visible weights and biases, but the input has an understood 
+            and measurable importance to the output. This grouping spans rudimentary ML models such as linear regression, 
+            supported vector machines, and decision trees, but also much more complex models, including NNs equipped with 
+            post-hoc explainers (SHAP, LIME, Saliency Maps)[3 - 6]. It's because of this transparency that interpretable 
+            and opaque systems are mutually exclusive.
+        </p>
+        <h3>Comprehensible Systems</h3>
+        <p class="first-line-indent">
+            Comprehensible systems, in contrast to the post-hoc explainers described previously, are models that were designed 
+            with explainability in mind. These models often output a method of comprehension alongside the desired output, many 
+            times in the form of words or images. These extra outputs, termed as symbols, allow the user to draw connections 
+            between the properties of the input and its corresponding output [7]. For example, imagine a comprehensible image 
+            classifier model. Not only would it classify an image of a dog as such, but it would indicate the relevant features 
+            of the input that led to that decision: ears, tail, collar, etc. One last thing to note - comprehensible systems, 
+            despite outputting symbols for model interpretability, are not defined with the same model transparency as interpretable 
+            systems and thus can be either interpretable or transparent.
+        </p>
+        <h3>Explainable Systems</h3>
+        <p class="first-line-indent">
+            While comprehensible systems leave interpretations of the symbols up to the user, explainable systems take it a step further 
+            and introduce a "reasoner" model, which explains the exact reasoning of the model given the symbols. This reasoner model comes 
+            equipped with a knowledge base similar to that of a human evaluator, to standardize the evaluation process, no longer dependent 
+            on how informed the human is. The evaluator draws connections directly from the input to the output, leaving no gray area in 
+            interpretation. It is important to note that the human element of this type of model still exists by checking the interpretation 
+            of the reasoner.
+        </p>
+        <h3>The Human Element</h3>
+        <p class="first-line-indent">
+            All of these systems have one (generally welcome) bottleneck; They all leave the "trustworthiness" up to the user. It is the user's 
+            responsibility to evaluate whether the internal weights of an interpretable model or the symbols provided by the comprehensible model 
+            are reasonable and morally justifiable explanations for the output. This human element acts as a final check for the model, resulting 
+            in a system (in theory) as trustworthy as the model evaluator.
+        </p>
+        <h2>How Do We Improve Explainability?</h2>
+        <p class="first-line-indent">
+            XAI is the field of study pertaining to the upward mobility of models between tiers. Now that we understand the objective of XAI, we can 
+            strive to comprehend the strategies researchers employ to accomplish this. 
+        </p>
+        <h2>Citations</h2>
         <p>
-            Add more content, images, or code blocks as needed. You can duplicate this
-            section pattern to structure your post.
+            [1] https://www.ibm.com/think/topics/explainable-ai <br>
+            [2] https://arxiv.org/pdf/1710.00794<br>
+            [3] https://arxiv.org/abs/2303.08806<br>
+            [4] https://dl.acm.org/doi/10.5555/3295222.3295230<br>
+            [5] https://dl.acm.org/doi/10.1145/2939672.2939778<br>
+            [6] https://arxiv.org/abs/1312.6034<br>
+            [7] Michie, D.: Machine learning in the next five years. In: Proc. of the Third European Working Session on Learning. pp. 107–122. Pitman (1988)
         </p>
 
-        <blockquote>
+        <!-- <blockquote>
             A short pull quote or key takeaway can go here.
-        </blockquote>
+        </blockquote> -->
 
-        <h3>Subheading</h3>
+        <!-- <h3>Subheading</h3>
         <p>
             Another paragraph with <strong>bold text</strong>, <em>italics</em>, and
             <a href="#">a link</a>.
-        </p>
+        </p> -->
 
-        <pre><code>// Example code block
+        <!-- <pre><code>// Example code block
             function hello() {
              console.log("Hello, world!");
             }  
-        </code></pre>
+        </code></pre> -->
     </article>
 
     <!-- Footer / Tags (optional) -->
