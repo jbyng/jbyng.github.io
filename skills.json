@@ -1,14 +1,19 @@
 {
     "skills": [
         {
-            "name": "Java",
-            "category": "Programming Language",
-            "icon": "https://img.icons8.com/color/512/java-coffee-cup-logo.png"
-        },
-        {
             "name": "Python",
             "category": "Programming Language",
             "icon": "https://images.icon-icons.com/2699/PNG/512/python_logo_icon_168886.png"
+        },
+        {
+            "name": "C",
+            "category": "Programming Language",
+            "icon": "https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg"
+        },
+        {
+            "name": "Java",
+            "category": "Programming Language",
+            "icon": "https://img.icons8.com/color/512/java-coffee-cup-logo.png"
         },
         {
             "name": "SQL",
@@ -69,6 +74,11 @@
           "name": "PyTorch",
           "category":"Data Analytics",
           "icon": "data:image/png;base64,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"
+        },
+        {
+          "name": "TensorFlow",
+          "category":"Data Analytics",
+          "icon": "https://icon.icepanel.io/Technology/svg/TensorFlow.svg"
         },
         {
           "name": "Matplotlib",
