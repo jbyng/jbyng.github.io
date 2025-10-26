@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perspective: A Domain Analysis of XAI</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .wrap {
+      max-width: var(--maxw);
+      margin: 64px auto;
+      padding: 0 20px;
+    }
+    .section {
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+    .articlesection {
+        padding: 10px 10%;
+        border-top: 1px solid var(--line);
+        margin: 0;
+    }
+
+    .section:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+    header h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+    .header-inner {
+        margin-inline: auto;
+        text-align: left;        /* left-align the text inside */
+        max-width: 1000px;        /* your desired line length */
+        width: min(90%, 100ch);   /* responsive width cap */
+    }
+    header.section {
+        text-align: center;
+        padding: 24px 0;
+        border-top: 1px solid var(--line);
+        margin: 0;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding-top: 2vw;
+      margin-left: 2em;
+    }
+    .meta span::before {
+      content: "•";
+      margin: 0 8px 0 0;
+      color: var(--line);
+    }
+    .meta span:first-child::before {
+      content: "";
+      margin: 0;
+    }
+    article p {
+      margin: 0 0 0 0;
+    }
+    article h2, article h3 {
+      margin: 1.6em 0 0.6em;
+      line-height: 1.3;
+    }
+    article img, article video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+    blockquote {
+      margin: 1.2em 0;
+      padding: 0.75em 1em;
+      border-left: 4px solid var(--line);
+      background: #fafafa;
+    }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      background: #f8f9fb;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+    code { padding: 0.15em 0.35em; }
+    pre  { padding: 12px; overflow: auto; }
+    footer {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .first-line-indent {
+    text-indent: 4em; /* Indents only the first line */
+    }
+  </style>
+</head>
+<body>
+    <div class="blog-nav" style="font-family: 'EB Garamond', serif;">
+        <a href="index.html#about" class="nav-button">About Me</a>
+        <a href="index.html#experience" class="nav-button">Work Experience</a>
+        <a href="index.html#research" class="nav-button">Research</a>
+        <a href="index.html#projects" class="nav-button">Projects</a>
+        <a href="blog.html" class="nav-button">Blogs</a>
+    </div>
+
+
+   <div class="wrap">
+
+    <!-- Title -->
+    <header class="section">
+      <div class="header-inner">
+        <h1>Perspective: A Domain Analysis of XAI</h1>
+        <div class="meta">
+            <span>By <strong>James B Yang</strong></span>
+            <span><time datetime="2025-10-25">October 25, 2025</time></span>
+            <!-- Optional: <span>5 min read</span> -->
+        </div>
+      </div>
+    </header>
+
+    <!-- Body -->
+    <article class="articlesection" role="article">
+      
+        <h2>Summary</h2>
+
+        <p class="first-line-indent">
+            With explainable artificial intelligence in it's infancy, the overarching domain has limited 
+            documentation for those less familiar with the field. This article aims to aid nonspecialists in 
+            developing a high-level understanding of the field. This summarization will also contain links and
+            descriptions of important papers to provide direction to those entering the research space.
+
+        </p>
+
+        <h2>Section Heading</h2>
+        <p>
+            Add more content, images, or code blocks as needed. You can duplicate this
+            section pattern to structure your post.
+        </p>
+
+        <blockquote>
+            A short pull quote or key takeaway can go here.
+        </blockquote>
+
+        <h3>Subheading</h3>
+        <p>
+            Another paragraph with <strong>bold text</strong>, <em>italics</em>, and
+            <a href="#">a link</a>.
+        </p>
+
+        <pre><code>// Example code block
+            function hello() {
+             console.log("Hello, world!");
+            }  
+        </code></pre>
+    </article>
+
+    <!-- Footer / Tags (optional) -->
+    <footer class="section">
+      <p>Tags: <em>xai</em>, <em>ml</em>, <em>research</em></p>
+    </footer>
+
+  </div>
+</body>
+</html>

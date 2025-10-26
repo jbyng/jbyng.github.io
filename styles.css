@@ -778,3 +778,22 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+
+@media (max-width: 600px) {
+  .blog-nav {
+    min-height: 60px;
+    overflow-x: auto;            /* enable scroll */
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    gap: 0;
+    padding: 12px 10px;
+    justify-content: flex-start; /* left align so first link is visible */
+  }
+  .blog-nav .nav-button {
+    flex: 0 0 auto;              /* don’t shrink */
+    margin: 0 10px;
+  }
+  .blog-nav::-webkit-scrollbar { 
+    display: none; 
+  }
+}
