@@ -27,6 +27,16 @@ header {
     border-radius: 20px;
     transition: transform 0.2s ease;
 }
+header2 {
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    transition: transform 0.2s ease;
+}
 
 header:hover {
     transform: translateY(-5px);
@@ -781,6 +791,30 @@ footer {
 }
 
 @media (max-width: 600px) {
+
+    #blog {
+    margin-top: 0;
+    width: 90%;
+    max-width: 1000px;
+    padding: 0 40px 40px 40px;
+    /* background-color: #f9f9f9; */
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin-bottom: 80px;
+    }
+
+    header2 {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    transition: transform 0.2s ease;
+    }
+
   .blog-nav {
     min-height: 60px;
     overflow-x: auto;            /* enable scroll */
