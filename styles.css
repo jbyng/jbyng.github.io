@@ -738,7 +738,7 @@ footer {
 
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .skills-grid {
         grid-template-columns: 1fr; /* Stack cards on smaller screens */
         margin: 10px;
