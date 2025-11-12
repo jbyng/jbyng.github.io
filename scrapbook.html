@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ladybug Leaf Collector</title>
+  <style>
+    :root {
+      --hud-height: 56px;
+      --bg: #0b3d1a; /* dark leaf green */
+      --leaf: #2d8a46; /* leaf fill */
+      --vein: #1b5e2b; /* leaf veins */
+      --hud: rgba(255,255,255,0.9);
+      --text: #0c2a14;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      overflow: hidden;
+    }
+    .game-root {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    .hud {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: var(--hud-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      box-sizing: border-box;
+      background: var(--hud);
+      backdrop-filter: blur(6px);
+      z-index: 2;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      gap: 12px;
+    }
+    .hud .title {
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .hud .counter {
+      font-weight: 600;
+      padding: 6px 10px;
+      background: rgba(13, 148, 78, 0.12);
+      border-radius: 10px;
+      border: 1px solid rgba(13,148,78,0.25);
+    }
+    canvas {
+      position: absolute;
+      top: var(--hud-height);
+      left: 0; right: 0; bottom: 0;
+      width: 100%; height: calc(100% - var(--hud-height));
+      display: block;
+      background: transparent;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none; /* toggled to flex */
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+    .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    max-width: min(90vw, 720px);
+    /* was 70vh; bump a bit for comfort (optional) */
+    max-height: min(80vh, 720px); /* ⬅ changed */
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px;
+    box-sizing: border-box;
+    overflow: auto; /* ⬅ NEW: allow the card to scroll if content exceeds max-height */
+    }
+    .card header { 
+    font-weight: 700; 
+    }
+    .card img, 
+    .card .imgholder {
+    width: 100%;
+    /* keep tall images from stealing all space */
+    max-height: calc(80vh - 180px); /* ⬅ changed (rough allowance for header/footer/padding) */
+    object-fit: contain;
+    border-radius: 12px;
+    background: #f5f5f5;
+    border: 1px solid rgba(0,0,0,0.08);
+    min-height: 0; /* ⬅ NEW: let flex children shrink */
+    }
+    .card .desc { 
+    min-height: 0;  /* already good */
+    overflow: auto; /* already good */
+    line-height: 1.35; 
+    font-size: 0.95rem; 
+    color: #0c2a14;
+    }
+    .card footer { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 8px; 
+    }
+
+    .btn {
+      padding: 10px 14px; border-radius: 12px; font-weight: 600; cursor: pointer; user-select: none;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: #f3f3f3;
+    }
+    .btn.primary { background: #16a34a; color: white; border: 1px solid #128a3e; }
+    .toast {
+      position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.95);
+      padding: 10px 14px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      z-index: 4; font-weight: 600;
+      display: none;
+    }
+    .joystick { position: absolute; left: 20px; bottom: 24px; width: 140px; height: 140px; z-index: 2; touch-action: none; }
+    .joy-base { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.5); }
+    .joy-stick { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin-left: -28px; margin-top: -28px; border-radius: 50%; background: rgba(255,255,255,0.9); border: 2px solid rgba(0,0,0,0.15); }
+  </style>
+</head>
+<body>
+  <div class="game-root" id="root">
+    <div class="hud">
+      <div class="title">Bryce Yang's ENT 201 Scrapbook</div>
+      <div class="counter" id="counter">Aphids: 0 / 0</div>
+      <div style="opacity:.7;font-size:.9rem">Move: WASD/Arrows • Touch: Joystick • Collect aphids to reveal images!</div>
+    </div>
+    <canvas id="game"></canvas>
+
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true">
+      <div class="card" role="document">
+        <header id="overlayTitle">You found an aphid!</header>
+        <img id="overlayImg" alt="Revealed image" />
+        <div id="overlayDesc" class="desc"></div>
+        <footer>
+          <button class="btn" id="btnPrev" title="Previous">⟵ Prev</button>
+          <button class="btn" id="btnNext" title="Next">Next ⟶</button>
+          <button class="btn primary" id="btnClose">Continue</button>
+        </footer>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">All images collected! 🎉</div>
+
+    <!-- On-screen joystick for touch -->
+    <div class="joystick" id="joystick" aria-hidden="true">
+      <div class="joy-base"></div>
+      <div class="joy-stick" id="joyStick"></div>
+    </div>
+  </div>
+
+  <script>
+    // =====================
+    // CONFIGURE YOUR GAME
+    // =====================
+    // 1) Provide your image bank here (absolute URLs, relative paths, or data URLs). No repeat will be shown.
+    // Example URLs below are procedurally generated placeholders. Replace these with your own.
+    // const IMAGE_BANK = ["scrapbook_images/File_008.png","scrapbook_images/File_010.png","scrapbook_images/IMG_5751.jpg","scrapbook_images/IMG_6849.jpg","scrapbook_images/IMG_7188.jpg","scrapbook_images/IMG_7253.jpg","scrapbook_images/IMG_7284.jpg","scrapbook_images/IMG_7286.jpg","scrapbook_images/IMG_7288.jpg","scrapbook_images/IMG_7289.jpg","scrapbook_images/IMG_7325.jpg","scrapbook_images/IMG_7375.PNG","scrapbook_images/IMG_7382.jpg","scrapbook_images/IMG_7383.jpg","scrapbook_images/IMG_7384.jpg","scrapbook_images/IMG_7385.jpg","scrapbook_images/IMG_7386.jpg","scrapbook_images/IMG_7387.jpg","scrapbook_images/IMG_7388.jpg","scrapbook_images/IMG_7389.jpg","scrapbook_images/IMG_7390.jpg","scrapbook_images/IMG_7391.jpg","scrapbook_images/IMG_7392.jpg","scrapbook_images/IMG_7393.jpg","scrapbook_images/IMG_7394.jpg","scrapbook_images/IMG_7395.jpg","scrapbook_images/IMG_7396.jpg","scrapbook_images/IMG_7397.jpg","scrapbook_images/IMG_7435.PNG","scrapbook_images/IMG_7439.jpg","scrapbook_images/IMG_7440.jpg","scrapbook_images/IMG_7441.jpg","scrapbook_images/IMG_7442.jpg","scrapbook_images/IMG_7443.jpg","scrapbook_images/IMG_7459.jpg","scrapbook_images/IMG_7461.jpg","scrapbook_images/IMG_7463.jpg","scrapbook_images/IMG_7486.jpg","scrapbook_images/IMG_7568.jpg","scrapbook_images/IMG_7723.jpg","scrapbook_images/IMG_7728.PNG","scrapbook_images/IMG_7734.jpg","scrapbook_images/IMG_7757.jpg","scrapbook_images/IMG_7776.PNG","scrapbook_images/IMG_7784.jpg","scrapbook_images/IMG_7798.jpg","scrapbook_images/IMG_7799.jpg","scrapbook_images/IMG_7802.jpg","scrapbook_images/IMG_7873.jpg","scrapbook_images/IMG_7874.jpg","scrapbook_images/IMG_7900.PNG","scrapbook_images/IMG_7935.jpg","scrapbook_images/IMG_7936.jpg","scrapbook_images/IMG_7937.jpg","scrapbook_images/IMG_8362.jpg"]
+
+    const IMAGE_BANK = [
+    {"url":"scrapbook_images/IMG_5751.jpg","title":"Childhood Artwork","desc":"This was a previous artwork I created for Mother's Day in 2010. I added a butterfly because I had an eye for decoration."},
+    {"url":"scrapbook_images/IMG_6849.jpg","title":"Halloween Costumes","desc":"This picture was in my mom's old photo album. Insects such as ladybird beetles and bees are common costumes for young children because they're adorable."},
+    {"url":"scrapbook_images/IMG_7188.jpg","title":"Hercules Beetle","desc":"I took this picture of the hurcules beetle on my arm during class."},
+    {"url":"scrapbook_images/IMG_7253.jpg","title":"Phone Case","desc":"This is a picture of my girlfriend's phone case."},
+    {"url":"scrapbook_images/IMG_7284.jpg","title":"Leaf","desc":"This leaf has been partially eaten by some kind of insect."},
+    {"url":"scrapbook_images/IMG_7286.jpg","title":"Harvestman","desc":"This is a picture of a daddy long leg taken in Hanging Rock State Park."},
+    {"url":"scrapbook_images/IMG_7288.jpg","title":"True Bug","desc":"This picture of some sort of true bug was taken at Hanging Rock State Park. Maybe a kind of stinkbug?"},
+    {"url":"scrapbook_images/IMG_7289.jpg","title":"Dead Cicada","desc":"I discovered this diseased cicada underneath a log when I went for a walk."},
+    {"url":"scrapbook_images/IMG_7325.jpg","title":"Butterfly Earring","desc":"Here is an earring of my friend."},
+    {"url":"scrapbook_images/IMG_7382.jpg","title":"Bug Museum 1","desc":"Beetle collection at NCSU."},
+    {"url":"scrapbook_images/IMG_7383.jpg","title":"Bug Museum 2","desc":"Medium-sized beetles at NCSU."},
+    {"url":"scrapbook_images/IMG_7384.jpg","title":"Bug Museum 3","desc":"Large beetles at NCSU."},
+    {"url":"scrapbook_images/IMG_7387.jpg","title":"Bug Museum 4","desc":"Huge beetles at NCSU."},
+    {"url":"scrapbook_images/IMG_7390.jpg","title":"Bug Museum 5","desc":"Large Rhinoceros Beetle."},
+    {"url":"scrapbook_images/IMG_7394.jpg","title":"Bug Museum 6","desc":"Euchroma Gigantea."},
+    {"url":"scrapbook_images/IMG_7396.jpg","title":"Bug Museum 7","desc":"Sagra bougueti."},
+    {"url":"scrapbook_images/IMG_7439.jpg","title":"Bug Museum 8","desc":"Collection of Moths."},
+    {"url":"scrapbook_images/IMG_7440.jpg","title":"Bug Museum 9","desc":"Diverse collection of moths."},
+    {"url":"scrapbook_images/IMG_7441.jpg","title":"Wall Decor 1","desc":"Large photographs of two insects."},
+    {"url":"scrapbook_images/IMG_7442.jpg","title":"Bug Stickers","desc":"Stickers of various insects pasted onto a window."},
+    {"url":"scrapbook_images/IMG_7443.jpg","title":"Wall Decor 2","desc":"A collection of insects shown in two enlarged photographs."},
+    {"url":"scrapbook_images/IMG_7459.jpg","title":"Gummies","desc":"Gummi butterflies. Gluten free, fat free, and low sodium!"},
+    {"url":"scrapbook_images/IMG_7461.jpg","title":"T-Shirt: Front","desc":"A T-shirt picturing flies and carnivorous plants."},
+    {"url":"scrapbook_images/IMG_7463.jpg","title":"T-Shirt: Back","desc":"A description of three carnivorous plants on a T-shirt."},
+    {"url":"scrapbook_images/IMG_7486.jpg","title":"7-Legged Spider","desc":"A spider by my house - missing a leg."},
+    {"url":"scrapbook_images/IMG_7568.jpg","title":"Mosquito Tee","desc":"Found this hidden gem at my local thrift store."},
+    {"url":"scrapbook_images/IMG_7723.jpg","title":"Insect Market","desc":"My friend who is studying abroad took this picture at a Thai night market."},
+    {"url":"scrapbook_images/IMG_7734.jpg","title":"Research Poster","desc":"As a computer science major, it is impossible to escape bugs. Even when making this game!"},
+    {"url":"scrapbook_images/IMG_7757.jpg","title":"Spider","desc":"Leg and white legged spider. Found at Lake Johnson."},
+    {"url":"scrapbook_images/IMG_7784.jpg","title":"Temporary Tattoo","desc":"I took this photo of a stranger."},
+    {"url":"scrapbook_images/IMG_7798.jpg","title":"License Plate","desc":"This driver is clearly a fan of bees."},
+    {"url":"scrapbook_images/IMG_7799.jpg","title":"Bumper Sticker","desc":"Sticker of a grasshopper/locust."},
+    {"url":"scrapbook_images/IMG_7802.jpg","title":"Insect Earring","desc":"Mysterious insect earring."},
+    {"url":"scrapbook_images/IMG_7873.jpg","title":"Insect Tattoo","desc":"I met this person at a concert for the artist \"Slater\""},
+    {"url":"scrapbook_images/IMG_7874.jpg","title":"Butterfly Tattoos","desc":"Whimsical butterfly tattoos."},
+    {"url":"scrapbook_images/IMG_7900.PNG","title":"Insect Trap","desc":"I purchased this insect trap for my apartment. Works great, 10/10."},
+    {"url":"scrapbook_images/IMG_7935.jpg","title":"Beetle Tattoo","desc":"Beetle tattoo on my friend Gibson."},
+    {"url":"scrapbook_images/IMG_7936.jpg","title":"Mystery Bug Tattoo","desc":"Not quite sure what this is. Assassin bug maybe?"},
+    {"url":"scrapbook_images/IMG_7937.jpg","title":"Moth Tattoo","desc":"One of the many insect tattoos I encounter."},
+    {"url":"scrapbook_images/IMG_8362.jpg","title":"Honeycomb Car","desc":"Car with honeycomb patterns."}
+    ];
+
+
+    //generatePlaceholderImages(8); // e.g., ["images/pic1.jpg", "images/pic2.png", ...]
+
+    // 2) Ladybug movement speed in pixels/second (scaled with devicePixelRatio internally).
+    const LADYBUG_SPEED = 220;
+
+    // 3) Aphid size and count are tied to image bank length so counter is "collected / total images".
+
+    // 4) Canvas logical size (will scale to screen). Game draws responsive.
+    const WORLD = { width: 1800, height: 1200 };
+
+    // =====================
+    // HELPER: Placeholder images (nice for a self-contained demo)
+    // =====================
+    function generatePlaceholderImages(n) {
+      const titles = [
+        "Dew Drop", "Sunlit Leaf", "Forest Path", "Ladybug Close-up", "Green Canopy", "Morning Mist", "Aphid Macro", "Hidden Grove",
+        "River Bend", "Wildflower", "Sky Through Leaves", "Moss Texture"
+      ];
+      const arr = [];
+      for (let i = 0; i < n; i++) {
+        const w = 900, h = 600;
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        const g = c.getContext('2d');
+        // background gradient
+        const grad = g.createLinearGradient(0,0,w,h);
+        grad.addColorStop(0, `hsl(${(i*47)%360} 60% 65%)`);
+        grad.addColorStop(1, `hsl(${(i*47+80)%360} 50% 45%)`);
+        g.fillStyle = grad; g.fillRect(0,0,w,h);
+        // decorative leaf veins
+        g.strokeStyle = 'rgba(255,255,255,0.35)'; g.lineWidth = 4;
+        for (let v=0; v<6; v++) {
+          g.beginPath();
+          g.moveTo(20, h*(v+1)/7);
+          g.bezierCurveTo(w*0.35, h*(v+0.8)/7, w*0.65, h*(v+1.2)/7, w-20, h*(v+1)/7);
+          g.stroke();
+        }
+        // title
+        g.fillStyle = 'rgba(0,0,0,0.75)';
+        g.font = '700 48px system-ui, Segoe UI, Roboto, Arial';
+        const label = titles[i % titles.length];
+        g.fillText(label, 32, 70);
+        arr.push({ url: c.toDataURL('image/png'), title: label, desc: `A tranquil nature-themed shot titled "${label}".` });
+      }
+      return arr;
+    }
+
+    // =====================
+    // Game State
+    // =====================
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+    const hudCounter = document.getElementById('counter');
+    const overlay = document.getElementById('overlay');
+    const overlayImg = document.getElementById('overlayImg');
+    const overlayDesc = document.getElementById('overlayDesc');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const btnClose = document.getElementById('btnClose');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const toast = document.getElementById('toast');
+
+    const joystick = document.getElementById('joystick');
+    const joyStick = document.getElementById('joyStick');
+
+    let width, height, viewScale;
+
+    // world objects
+    const ladybug = {
+      x: WORLD.width * 0.5,
+      y: WORLD.height * 0.5,
+      r: 24,
+      angle: 0,
+      speed: LADYBUG_SPEED,
+    };
+
+    // Aphids: one per image so UI shows "collected / total images"
+    const aphids = [];
+    let totalImages = IMAGE_BANK.length;
+
+    // images still available to reveal
+    const remainingImages = [...IMAGE_BANK];
+    const revealedImages = []; // history for prev/next in overlay
+    let overlayIndex = -1; // current index inside revealedImages
+
+    // Input state
+    const keys = new Set();
+    let joyActive = false, joyOrigin = {x:0,y:0}, joyVec = {x:0,y:0};
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    function placeAphids(count) {
+      aphids.length = 0;
+      const margin = 80;
+      // simple rejection sampling to avoid clustering too tightly
+      const minDist = 90;
+      for (let i=0; i<count; i++) {
+        let tries = 0;
+        let ax, ay;
+        do {
+          ax = rand(margin, WORLD.width - margin);
+          ay = rand(margin, WORLD.height - margin);
+          tries++;
+          if (tries > 500) break;
+        } while (aphids.some(a => ((a.x-ax)**2 + (a.y-ay)**2) < (minDist*minDist)));
+        aphids.push({ x: ax, y: ay, r: 18, collected: false });
+      }
+    }
+
+    placeAphids(totalImages);
+
+    // =====================
+    // Resize / Canvas setup
+    // =====================
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      width = Math.floor(rect.width * dpr);
+      height = Math.floor(rect.height * dpr);
+      canvas.width = width; canvas.height = height;
+      // scale world to fit, preserving aspect
+      const sx = width / WORLD.width;
+      const sy = height / WORLD.height;
+      viewScale = Math.min(sx, sy);
+      ctx.setTransform(viewScale, 0, 0, viewScale, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // =====================
+    // Input
+    // =====================
+    window.addEventListener('keydown', e => { keys.add(e.key); });
+    window.addEventListener('keyup', e => { keys.delete(e.key); });
+
+    // Virtual joystick (touch)
+    joystick.addEventListener('pointerdown', e => {
+      joyActive = true;
+      joystick.setPointerCapture(e.pointerId);
+      const rect = joystick.getBoundingClientRect();
+      joyOrigin = { x: rect.left + rect.width/2, y: rect.top + rect.height/2 };
+    });
+    joystick.addEventListener('pointermove', e => {
+      if (!joyActive) return;
+      const dx = e.clientX - joyOrigin.x;
+      const dy = e.clientY - joyOrigin.y;
+      const rad = 50; // max radius for stick
+      const len = Math.hypot(dx,dy) || 1;
+      const cl = Math.min(len, rad);
+      joyVec.x = (dx/len) * (cl/rad);
+      joyVec.y = (dy/len) * (cl/rad);
+      joyStick.style.transform = `translate(${joyVec.x*rad}px, ${joyVec.y*rad}px)`;
+    });
+    joystick.addEventListener('pointerup', () => { joyActive = false; joyVec.x = joyVec.y = 0; joyStick.style.transform = 'translate(0,0)'; });
+    joystick.addEventListener('pointercancel', () => { joyActive = false; joyVec.x = joyVec.y = 0; joyStick.style.transform = 'translate(0,0)'; });
+
+    // =====================
+    // Overlay controls
+    // =====================
+    function showOverlayWith(item) {
+      const url = (typeof item === 'string') ? item : (item.url || '');
+      overlayImg.src = url;
+      overlayTitle.textContent = (typeof item === 'object' && item.title) ? item.title : 'You found an aphid!';
+      overlayDesc.textContent = (typeof item === 'object' && item.desc) ? item.desc : '';
+      overlay.style.display = 'flex';
+      overlayIndex = revealedImages.length - 1;
+    }
+
+    function hideOverlay() { overlay.style.display = 'none'; }
+
+    btnClose.addEventListener('click', hideOverlay);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) hideOverlay(); });
+
+    function updateOverlayNav() {
+      btnPrev.disabled = (overlayIndex <= 0);
+      btnNext.disabled = (overlayIndex >= revealedImages.length - 1);
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (overlayIndex > 0) {
+        overlayIndex--;
+        const it = revealedImages[overlayIndex];
+        overlayImg.src = (typeof it === 'string') ? it : (it.url || '');
+        overlayTitle.textContent = (typeof it === 'object' && it.title) ? it.title : 'You found an aphid!';
+        overlayDesc.textContent = (typeof it === 'object' && it.desc) ? it.desc : '';
+        updateOverlayNav();
+      }
+    });
+    btnNext.addEventListener('click', () => {
+      if (overlayIndex < revealedImages.length - 1) {
+        overlayIndex++;
+        const it = revealedImages[overlayIndex];
+        overlayImg.src = (typeof it === 'string') ? it : (it.url || '');
+        overlayTitle.textContent = (typeof it === 'object' && it.title) ? it.title : 'You found an aphid!';
+        overlayDesc.textContent = (typeof it === 'object' && it.desc) ? it.desc : '';
+        updateOverlayNav();
+      }
+    });
+
+    // =====================
+    // Drawing helpers
+    // =====================
+    function drawLeafBackground() {
+      const w = WORLD.width, h = WORLD.height;
+      // leaf shape
+      ctx.save();
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--leaf');
+      ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--vein');
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      // a big leaf with bezier outline
+      ctx.moveTo(w*0.05, h*0.5);
+      ctx.bezierCurveTo(w*0.20, h*0.05, w*0.65, h*0.05, w*0.95, h*0.5);
+      ctx.bezierCurveTo(w*0.65, h*0.95, w*0.20, h*0.95, w*0.05, h*0.5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.clip();
+
+      // subtle texture
+      for (let i=0; i<8; i++) {
+        ctx.beginPath();
+        const y = h*(i+1)/9;
+        ctx.moveTo(w*0.1, y);
+        ctx.bezierCurveTo(w*0.3, y-30, w*0.7, y+30, w*0.9, y);
+        ctx.stroke();
+      }
+
+      // midrib
+      ctx.beginPath();
+      ctx.moveTo(w*0.12, h*0.5);
+      ctx.bezierCurveTo(w*0.4, h*0.48, w*0.6, h*0.52, w*0.88, h*0.5);
+      ctx.lineWidth = 8;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawAphid(a) {
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.3)';
+      ctx.shadowBlur = 8; ctx.shadowOffsetY = 3;
+      // body
+      ctx.fillStyle = '#5ac44d';
+      ctx.beginPath();
+      ctx.ellipse(a.x, a.y, a.r, a.r*0.7, 0, 0, Math.PI*2);
+      ctx.fill();
+      // head
+      ctx.fillStyle = '#3c8e35';
+      ctx.beginPath(); ctx.arc(a.x + a.r*0.6, a.y - a.r*0.2, a.r*0.35, 0, Math.PI*2); ctx.fill();
+      // legs
+      ctx.strokeStyle = '#2a6a24'; ctx.lineWidth = 2;
+      for (let i=-1; i<=1; i++) {
+        ctx.beginPath(); ctx.moveTo(a.x - a.r*0.6, a.y + i*6); ctx.lineTo(a.x - a.r*1.2, a.y + i*12); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(a.x + a.r*0.6, a.y + i*6); ctx.lineTo(a.x + a.r*1.2, a.y + i*12); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawLadybug(bug) {
+      ctx.save();
+      ctx.translate(bug.x, bug.y);
+      ctx.rotate(bug.angle);
+
+      // shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      ctx.beginPath(); ctx.ellipse(6, 10, bug.r*0.9, bug.r*0.55, 0, 0, Math.PI*2); ctx.fill();
+
+      // body (elytra)
+      ctx.fillStyle = '#e11d48';
+      ctx.beginPath(); ctx.ellipse(0, 0, bug.r, bug.r*0.75, 0, 0, Math.PI*2); ctx.fill();
+      // split line
+      ctx.strokeStyle = '#111827'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(0, -bug.r*0.75); ctx.lineTo(0, bug.r*0.75); ctx.stroke();
+      // head/pronotum
+      ctx.fillStyle = '#111827';
+      ctx.beginPath(); ctx.arc(0, -bug.r*0.75, bug.r*0.45, 0, Math.PI*2); ctx.fill();
+      // spots
+      ctx.fillStyle = '#111827';
+      const spots = [ [-bug.r*0.4, -bug.r*0.2], [bug.r*0.4, -bug.r*0.1], [-bug.r*0.35, bug.r*0.2], [bug.r*0.25, bug.r*0.35] ];
+      spots.forEach(([sx, sy])=>{ ctx.beginPath(); ctx.arc(sx, sy, bug.r*0.18, 0, Math.PI*2); ctx.fill(); });
+      // antennae
+      ctx.strokeStyle = '#111827'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(-bug.r*0.15, -bug.r*0.95); ctx.quadraticCurveTo(-bug.r*0.45, -bug.r*1.2, -bug.r*0.2, -bug.r*1.35); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bug.r*0.15, -bug.r*0.95); ctx.quadraticCurveTo(bug.r*0.45, -bug.r*1.2, bug.r*0.2, -bug.r*1.35); ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+    function updateCounter() {
+      const collected = aphids.filter(a => a.collected).length;
+      hudCounter.textContent = `Aphids: ${collected} / ${totalImages}`;
+    }
+
+    function pickRandomImage() {
+      if (remainingImages.length === 0) return null;
+      const i = Math.floor(Math.random() * remainingImages.length);
+      const [item] = remainingImages.splice(i, 1);
+      revealedImages.push(item);
+      return item;
+    }
+
+    // =====================
+    // Main loop
+    // =====================
+    let last = performance.now();
+    function loop(now) {
+      const dt = Math.min(0.033, (now - last) / 1000); // clamp dt
+      last = now;
+
+      // Update only if overlay is hidden
+      const overlayVisible = overlay.style.display === 'flex';
+      if (!overlayVisible) {
+        // movement from keys
+        let mx = 0, my = 0;
+        if (keys.has('ArrowUp') || keys.has('w') || keys.has('W')) my -= 1;
+        if (keys.has('ArrowDown') || keys.has('s') || keys.has('S')) my += 1;
+        if (keys.has('ArrowLeft') || keys.has('a') || keys.has('A')) mx -= 1;
+        if (keys.has('ArrowRight') || keys.has('d') || keys.has('D')) mx += 1;
+        // add joystick vector
+        mx += joyVec.x; my += joyVec.y;
+        const len = Math.hypot(mx,my);
+        if (len > 0.01) {
+          mx /= len; my /= len;
+          ladybug.x += mx * ladybug.speed * dt;
+          ladybug.y += my * ladybug.speed * dt;
+          ladybug.angle = Math.atan2(my, mx);
+        }
+        // keep on leaf bounds (roughly inside world box)
+        ladybug.x = clamp(ladybug.x, 30, WORLD.width-30);
+        ladybug.y = clamp(ladybug.y, 30, WORLD.height-30);
+
+        // collisions with aphids
+        for (const a of aphids) {
+          if (!a.collected) {
+            const dx = a.x - ladybug.x, dy = a.y - ladybug.y;
+            const rr = (a.r + ladybug.r*0.7);
+            if (dx*dx + dy*dy < rr*rr) {
+              a.collected = true;
+              const item = pickRandomImage();
+              updateCounter();
+              if (item) {
+                showOverlayWith(item);
+                updateOverlayNav();
+              }
+              // if all done, toast
+              const all = aphids.every(x => x.collected);
+              if (all) {
+                toast.style.display = 'block';
+                setTimeout(()=> toast.style.display='none', 2500);
+              }
+            }
+          }
+        }
+      }
+
+      // DRAW
+      ctx.clearRect(0,0, WORLD.width, WORLD.height);
+      drawLeafBackground();
+      // aphids
+      for (const a of aphids) if (!a.collected) drawAphid(a);
+      // ladybug
+      drawLadybug(ladybug);
+
+      // HUD counter already updated in logic
+      requestAnimationFrame(loop);
+    }
+
+    updateCounter();
+    requestAnimationFrame(loop);
+
+    // Accessibility: close overlay with Escape
+    window.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') hideOverlay(); });
+
+    // =====================
+    // Public API (optional): Expose simple hooks for embedding pages to swap images at runtime
+    // =====================
+    window.LadybugGame = {
+      setImages(list) {
+        remainingImages.length = 0; revealedImages.length = 0; overlayIndex = -1;
+        (list || []).forEach(u => {
+          const item = (typeof u === 'string') ? { url: u, title: '', desc: '' } : u;
+          remainingImages.push(item);
+        });
+        totalImages = remainingImages.length;
+        placeAphids(totalImages);
+        updateCounter();
+      },
+      addImage(u) {
+        const item = (typeof u === 'string') ? { url: u, title: '', desc: '' } : u;
+        remainingImages.push(item);
+        totalImages += 1;
+        placeAphids(totalImages);
+        updateCounter();
+      },
+      getCollectedCount() { return aphids.filter(a=>a.collected).length; },
+      getTotalImages() { return totalImages; }
+    };
+
+    // =====================
+    // Dev/Test Harness (runs only with ?test in the URL)
+    // =====================
+    function runSelfTests() {
+      const results = [];
+      const log = (name, pass, msg='') => { results.push({name, pass, msg}); };
+
+      // Test 1: No-repeat selection logic (pure, does not touch game state)
+      (function testNoRepeat() {
+        const items = [1,2,3,4,5];
+        let remaining = [...items];
+        const seen = new Set();
+        for (let k=0;k<items.length;k++) {
+          const i = Math.floor(Math.random()*remaining.length);
+          const [val] = remaining.splice(i,1);
+          seen.add(val);
+        }
+        log('no-repeat-pick', seen.size === items.length, `unique=${seen.size}`);
+      })();
+
+      // Test 2: Overlay nav boundaries
+      (function testOverlayNavBounds(){
+        revealedImages.length = 0; revealedImages.push({url:'#1'},{url:'#2'});
+        overlayIndex = 0; updateOverlayNav();
+        const atStart = btnPrev.disabled === true && btnNext.disabled === false;
+        overlayIndex = 1; updateOverlayNav();
+        const atEnd = btnPrev.disabled === false && btnNext.disabled === true;
+        revealedImages.length = 0; overlayIndex = -1; updateOverlayNav();
+        log('overlay-nav-bounds', atStart && atEnd);
+      })();
+
+      // Test 3: Counter formatting
+      (function testCounter(){
+        const before = hudCounter.textContent;
+        hudCounter.textContent = '';
+        const count = 3; const total = 8;
+        hudCounter.textContent = `Aphids: ${count} / ${total}`;
+        const pass = /Aphids:\s*3\s*\/\s*8/.test(hudCounter.textContent);
+        log('counter-format', pass);
+        hudCounter.textContent = before; // restore
+      })();
+
+      // Report
+      const allPass = results.every(r=>r.pass);
+      console.groupCollapsed(`LadybugGame self-tests: ${allPass ? 'PASS' : 'FAIL'}`);
+      results.forEach(r=> console[r.pass?'log':'error'](`• ${r.name}: ${r.pass?'ok':'FAIL'} ${r.msg}`));
+      console.groupEnd();
+    }
+
+    if (/([?&])test(=1)?/.test(location.search)) {
+      runSelfTests();
+    }
+  </script>
+</body>
+</html>
