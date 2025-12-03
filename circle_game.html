@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Draw a Circle Game</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #020617;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      padding: 24px 28px 28px;
+      max-width: 720px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    .canvas-wrapper {
+      background: radial-gradient(circle at top, #1f2937, #020617 55%);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 360px;
+      border-radius: 12px;
+      background: #020617;
+      cursor: crosshair;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.25);
+    }
+
+    .canvas-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      font-size: 0.95rem;
+      color: #6b7280;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.15s ease;
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: none;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: white;
+      box-shadow: 0 12px 24px rgba(56, 189, 248, 0.35);
+    }
+
+    .primary:hover {
+      background: linear-gradient(135deg, #0ea5e9, #4f46e5);
+    }
+
+    .secondary {
+      background: #111827;
+      color: #e5e7eb;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.9);
+    }
+
+    .secondary:hover {
+      background: #020617;
+    }
+
+    .score-box {
+      margin-top: 4px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .score-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .score-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .score-detail {
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .score-bar {
+      position: relative;
+      flex: 1;
+      min-width: 150px;
+      height: 8px;
+      border-radius: 999px;
+      background: #020617;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .score-fill {
+      position: absolute;
+      inset: 0;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #f97316, #facc15, #22c55e);
+      transition: width 0.25s ease;
+    }
+
+    .instructions {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    .instructions ul {
+      padding-left: 1.3rem;
+      margin: 6px 0 0;
+    }
+
+    .instructions li {
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        border-radius: 0;
+        height: 100vh;
+        max-width: none;
+      }
+      canvas {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Circle Drawing Challenge</h1>
+    <div class="subtitle">
+      Draw a circle in one smooth stroke. Then click <strong>Rate My Circle</strong> to see how close you are to perfect.
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="circleCanvas"></canvas>
+      <div id="hint" class="canvas-hint">Click and drag to draw your best freehand circle.</div>
+    </div>
+
+    <div class="controls">
+      <button id="rateBtn" class="primary">
+        ⭐ Rate My Circle
+      </button>
+      <button id="clearBtn" class="secondary">
+        🧹 Clear Canvas
+      </button>
+    </div>
+
+    <div class="score-box">
+      <div>
+        <div class="score-label">Circle Score</div>
+        <div class="score-value" id="scoreValue">-- / 100</div>
+      </div>
+      <div class="score-bar">
+        <div class="score-fill" id="scoreFill"></div>
+      </div>
+      <div class="score-detail" id="scoreDetail">
+        Draw a circle and hit “Rate” to get feedback.
+      </div>
+    </div>
+
+    <div class="instructions">
+      <strong>Tips:</strong>
+      <ul>
+        <li>Bigger circles are a bit easier to control.</li>
+        <li>Try to draw it in one smooth motion and reconnect to your starting point.</li>
+        <li>The score is based on how constant your radius is, how circular the shape is (width vs height), and how well the circle closes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("circleCanvas");
+    const hint = document.getElementById("hint");
+    const rateBtn = document.getElementById("rateBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const scoreValue = document.getElementById("scoreValue");
+    const scoreDetail = document.getElementById("scoreDetail");
+    const scoreFill = document.getElementById("scoreFill");
+
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+    let points = [];
+
+    // Resize canvas for devicePixelRatio to keep lines crisp
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#e5e7eb";
+      redraw();
+    }
+
+    function clearCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      points = [];
+      hint.style.opacity = 1;
+      scoreValue.textContent = "-- / 100";
+      scoreDetail.textContent = "Draw a circle and hit “Rate” to get feedback.";
+      scoreFill.style.width = "0%";
+      redraw(); // Just in case
+    }
+
+    function startDraw(x, y) {
+      drawing = true;
+      points = [];
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      points.push({ x, y });
+      hint.style.opacity = 0;
+    }
+
+    function continueDraw(x, y) {
+      if (!drawing) return;
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      points.push({ x, y });
+    }
+
+    function endDraw() {
+      if (!drawing) return;
+      drawing = false;
+      ctx.closePath();
+    }
+
+    function getCanvasPos(evt) {
+      const rect = canvas.getBoundingClientRect();
+      let clientX, clientY;
+
+      if (evt.touches && evt.touches.length > 0) {
+        clientX = evt.touches[0].clientX;
+        clientY = evt.touches[0].clientY;
+      } else if (evt.changedTouches && evt.changedTouches.length > 0) {
+        clientX = evt.changedTouches[0].clientX;
+        clientY = evt.changedTouches[0].clientY;
+      } else {
+        clientX = evt.clientX;
+        clientY = evt.clientY;
+      }
+
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function redraw() {
+      // If you wanted, you could re-render the stroke from `points` here.
+      // For now, we assume resizing only happens before drawing.
+    }
+
+    function computeCircleScore(points) {
+      if (points.length < 20) {
+        return {
+          score: null,
+          message: "Try drawing a more complete circle (your stroke is too short)."
+        };
+      }
+
+      // Compute centroid
+      let sumX = 0, sumY = 0;
+      for (const p of points) {
+        sumX += p.x;
+        sumY += p.y;
+      }
+      const cx = sumX / points.length;
+      const cy = sumY / points.length;
+
+      // Radii & bounding box
+      let radii = [];
+      let minX = Infinity, maxX = -Infinity;
+      let minY = Infinity, maxY = -Infinity;
+
+      for (const p of points) {
+        const dx = p.x - cx;
+        const dy = p.y - cy;
+        const r = Math.sqrt(dx * dx + dy * dy);
+        radii.push(r);
+
+        if (p.x < minX) minX = p.x;
+        if (p.x > maxX) maxX = p.x;
+        if (p.y < minY) minY = p.y;
+        if (p.y > maxY) maxY = p.y;
+      }
+
+      // Mean radius
+      let sumR = 0;
+      for (const r of radii) sumR += r;
+      const meanR = sumR / radii.length;
+
+      if (meanR < 20) {
+        return {
+          score: null,
+          message: "Try drawing a bigger circle — very tiny circles are harder to score accurately."
+        };
+      }
+
+      // Radius variance
+      let varSum = 0;
+      for (const r of radii) {
+        const diff = r - meanR;
+        varSum += diff * diff;
+      }
+      const stdR = Math.sqrt(varSum / radii.length);
+      const relStd = stdR / meanR; // scale-invariant irregularity
+
+      // Aspect ratio (width vs height)
+      const width = maxX - minX;
+      const height = maxY - minY;
+      let aspectError = 0;
+      if (width > 0 && height > 0) {
+        const ratio = width > height ? width / height : height / width;
+        aspectError = ratio - 1; // 0 for perfect circle, >0 for elongated
+      }
+
+      // Closure error (how close start and end points are)
+      const first = points[0];
+      const last = points[points.length - 1];
+      const dx = last.x - first.x;
+      const dy = last.y - first.y;
+      const distEnd = Math.sqrt(dx * dx + dy * dy);
+      const closureError = Math.min(0.6, distEnd / meanR); // cap influence
+
+      // Combine errors into one measure
+      const combinedError =
+        relStd + 0.3 * aspectError + 0.5 * closureError;
+
+      // Turn error into score: exponential decay so small errors barely hurt,
+      // big errors hurt more.
+      let rawScore = 100 * Math.exp(-3 * combinedError);
+
+      if (!isFinite(rawScore)) rawScore = 0;
+      let score = Math.round(Math.max(0, Math.min(100, rawScore)));
+
+      // Friendly message based on score
+      let msg;
+      if (score === 100) {
+        msg = "Perfect! That’s about as circular as it gets. 🎯";
+      } else if (score >= 90) {
+        msg = "Super clean circle — very close to perfect! ✨";
+      } else if (score >= 75) {
+        msg = "Nice! That’s a very solid circle. A bit more practice and you’ll hit 90+.";
+      } else if (score >= 50) {
+        msg = "Not bad! Work on keeping your distance from the center more consistent.";
+      } else if (score >= 25) {
+        msg = "You’ve got the idea — try slowing down and keeping the shape more even.";
+      } else {
+        msg = "Circle chaos! Try a slower, smoother motion and aim to reconnect the ends.";
+      }
+
+      return {
+        score,
+        message:
+          msg +
+          ` (Relative radius wobble: ${relStd.toFixed(3)}, aspect error: ${aspectError.toFixed(
+            3
+          )}, closure: ${closureError.toFixed(3)})`
+      };
+    }
+
+    // Event listeners for mouse
+    canvas.addEventListener("mousedown", (e) => {
+      const pos = getCanvasPos(e);
+      startDraw(pos.x, pos.y);
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      const pos = getCanvasPos(e);
+      continueDraw(pos.x, pos.y);
+    });
+
+    canvas.addEventListener("mouseup", endDraw);
+    canvas.addEventListener("mouseleave", endDraw);
+
+    // Event listeners for touch
+    canvas.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      const pos = getCanvasPos(e);
+      startDraw(pos.x, pos.y);
+    }, { passive: false });
+
+    canvas.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+      const pos = getCanvasPos(e);
+      continueDraw(pos.x, pos.y);
+    }, { passive: false });
+
+    canvas.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      endDraw();
+    }, { passive: false });
+
+    // Buttons
+    rateBtn.addEventListener("click", () => {
+      const result = computeCircleScore(points);
+      if (!result.score && result.score !== 0) {
+        scoreValue.textContent = "-- / 100";
+        scoreDetail.textContent = result.message;
+        scoreFill.style.width = "0%";
+      } else {
+        scoreValue.textContent = `${result.score} / 100`;
+        scoreDetail.textContent = result.message;
+        scoreFill.style.width = `${result.score}%`;
+      }
+    });
+
+    clearBtn.addEventListener("click", clearCanvas);
+
+    // Initial setup
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    clearCanvas();
+  </script>
+</body>
+</html>
