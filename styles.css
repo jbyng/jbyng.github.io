@@ -60,7 +60,7 @@ header:hover {
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
-    margin-bottom: 300px
+    margin-bottom: 300px;
 }
 
 .box {
@@ -253,6 +253,38 @@ header:hover {
     margin-right: auto;
     padding-top: 3rem;
     padding-bottom: 3rem;
+}
+
+.scholar-link {
+    text-align: center;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+}
+
+.scholar-link a {
+    display: inline-block;
+    background-color: #4285F4;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.scholar-link a:hover {
+    background-color: #2b68c4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#research h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 40px;
 }
 
 .pub-grid {
@@ -459,7 +491,7 @@ figure {
 
 .experience-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 or more columns */
     gap: 30px;
     margin-top: 30px;
 }
@@ -508,7 +540,6 @@ figure {
     line-height: 1.5;
     margin-bottom: 10px;
     position: relative;
-    padding-left: 25px;
     color: #555;
     padding-left: 10px;
 }
@@ -527,10 +558,6 @@ figure {
     position: absolute;
     left: 0;
     top: 0;
-}
-
-.experience-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 or more columns */
 }
 
 /* Blog Section */
@@ -684,6 +711,10 @@ footer {
     align-items: center;
 }
 
+#contact p {
+    margin: 16px 0 0;
+}
+
 .email-button {
     background-color: #d9534f;
     display: flex;
@@ -721,6 +752,28 @@ footer {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
+.scholar-button {
+    display: flex;
+    align-items: center;
+    width: 140px;
+    background-color: #4285F4;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.scholar-button:hover {
+    color: #ffffff;
+    background-color: #2b68c4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
 .email-button:hover {
     color: #ffffff;
     background-color: #b4423e;
@@ -729,7 +782,8 @@ footer {
 }
 
 .linkedin-button svg,
-.email-button svg {
+.email-button svg,
+.scholar-button svg {
     fill: currentColor;
     width: 20px;
     height: 20px;

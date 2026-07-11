@@ -23,7 +23,7 @@
         {
             "name": "R",
             "category": "Programming Language",
-            "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/2560px-R_logo.svg.png"
+            "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg"
         },
         {
             "name": "JavaScript",
@@ -58,7 +58,7 @@
         {
             "name": "Git",
             "category": "IDEs and Tools",
-            "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/2048px-Git_icon.svg.png"
+            "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
         },
         {
             "name": "Linux",
@@ -103,7 +103,7 @@
         {
             "name": "Scikit-Learn",
             "category": "Data Analytics",
-            "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png"
+            "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg"
         },
         {
             "name": "Tableau",
