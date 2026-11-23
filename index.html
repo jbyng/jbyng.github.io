@@ -3,363 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>about James (Bryce) Yang...</title>
+    <title>James Yang</title>
+    <meta name="description" content="about me and my work, mostly">
     <link rel="icon" type="image/png" href="/images/helloworld2-removebg-preview.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-
 </head>
 <body>
-    <div class="initial-view-container">
-        <header>
-            <h1>James (Bryce) Yang</h1>
-            <h3>Honors CS & Stats Student @ NCSU</h3>
-        </header>
-        
-        <div class="boxes">
-            <a href="#about" class="box">About Me</a>
-            <a href="#experience" class="box">Work Experience</a>
-            <a href="#research" class="box">Research</a>
-            <a href="#projects" class="box">Projects</a>
-        </div>
+    <main class="landing">
+        <nav class="constellation" aria-label="Site">
 
-        <div class="single-button-wrapper">
-            <a href="blog.html" class="box wide-button">Blog</a>
-        </div>
-    </div>
+            <!-- about: a climber on a boulder -->
+            <a href="about.html" class="tile">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <ellipse class="tint" cx="52" cy="88" rx="30" ry="5"/>
+                    <path class="fill" d="M22 86 C18 62, 34 48, 50 46 C66 44, 80 56, 82 72 C84 82, 74 88, 60 88 L30 88 C24 88, 21 88, 22 86 Z"/>
+                    <path d="M40 60 c6 -4 10 -3 15 1"/>
+                    <path d="M58 74 c5 -2 9 -1 12 2"/>
+                    <circle class="fill" cx="46" cy="24" r="6"/>
+                    <path d="M46 30 L47 44"/>
+                    <path d="M47 33 L36 40 L34 48"/>
+                    <path d="M47 33 L60 26 L66 18"/>
+                    <path d="M47 44 L40 56 L45 60"/>
+                    <path d="M47 44 L58 50 L62 60"/>
+                    <path d="M62 16 c2 -3 5 -3 7 -1"/>
+                </svg>
+                <span class="caption">about</span>
+            </a>
 
-    <div id="about" class="reveal">
-        <h1>About Me</h1>
-        <div class="info-wrapper">
-            <div class="personal">
-                <p><strong>Welcome to my website!</strong></p>
-                <p>I'm a senior majoring in computer science and minoring in statistics at NC State University (go pack!). I'm deeply passionate about applied machine learning in medicine and computational biology, which I plan to pursue in medical school and beyond. When I'm not doing research, I invest my time in rock climbing via competing and coaching the NCSU Competitive Rock Climbing Team. I have competed in the North American Cup Series for Bouldering, as well as Sport & Bouldering Combined Nationals.</p>
-                <p>I was recently named a 2026 recipient of the <a href="https://engr.ncsu.edu/news/2026/05/18/yang-receives-goldwater-scholarship/" target="_blank" rel="noopener noreferrer">Barry M. Goldwater Scholarship</a>.</p>
-            </div>
-            <img src="images/bryce1.JPG" alt="James (Bryce) Yang rock climbing" class="climb-photo">
-        </div>
+            <!-- experience: a doctor's bag / briefcase with a stethoscope -->
+            <a href="experience.html" class="tile">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <ellipse class="tint" cx="50" cy="88" rx="32" ry="5"/>
+                    <path class="fill" d="M18 44 C18 38, 22 36, 28 36 L72 36 C78 36, 82 38, 82 44 L82 76 C82 82, 78 84, 72 84 L28 84 C22 84, 18 82, 18 76 Z"/>
+                    <path d="M38 36 L38 30 C38 26, 41 24, 45 24 L55 24 C59 24, 62 26, 62 30 L62 36"/>
+                    <path d="M18 56 L82 56"/>
+                    <path class="fill" d="M44 52 L56 52 L56 60 L44 60 Z"/>
+                    <path d="M28 70 c4 10, 14 10, 18 0"/>
+                    <circle class="fill" cx="46" cy="70" r="3"/>
+                    <path d="M28 70 L28 64 M46 70 L46 64"/>
+                </svg>
+                <span class="caption">experience</span>
+            </a>
 
-        <!-- education section -->
-        <section class="education" id="education">
-            <h2>Education</h2>
-            <div class="education-container">
-                <div class="edu-card">
-                    <h3>North Carolina State University</h3>
-                    <p><strong>Year:</strong> 2023-2027</p>
-                    <p><strong>Degree: </strong>Computer Science B.S.</p>
-                    <p><strong>GPA:</strong> 4.00</p>
-                    <p><strong>Courses:</strong> Machine Learning, Linear Algebra, Data Structures, Algorithms, Software Development Fundamentals, Calculus I-III, Calculus-Based Statistics, Discrete Mathematics, Object Oriented Programming, Computing Environments</p>
-                    <p><strong>Extracurriculars:</strong></p>
-                    <ul>
-                        <li>Pack Climbing - Competitive Team Head Coach</li>
-                        <li>Pack Climbing - Treasurer</li>
-                    </ul>
-                </div>
+            <!-- research: flask and DNA strand -->
+            <a href="research.html" class="tile">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <ellipse class="tint" cx="50" cy="88" rx="32" ry="5"/>
+                    <path class="fill" d="M42 14 L58 14 L58 40 L76 76 C79 82, 76 86, 70 86 L30 86 C24 86, 21 82, 24 76 L42 40 Z"/>
+                    <path d="M38 14 L62 14"/>
+                    <path class="ink" d="M36 60 L64 60 L74 80 C75 83, 73 84, 70 84 L30 84 C27 84, 25 83, 26 80 Z" opacity="0.12"/>
+                    <path d="M34 66 c8 -6 16 -6 24 0"/>
+                    <circle class="fill" cx="46" cy="72" r="2"/>
+                    <circle class="fill" cx="58" cy="76" r="2.5"/>
+                    <circle class="fill" cx="40" cy="78" r="1.6"/>
+                    <path d="M18 18 c6 6, 6 14, 0 20 c-6 6, -6 14, 0 20"/>
+                    <path d="M30 18 c-6 6, -6 14, 0 20 c6 6, 6 14, 0 20"/>
+                    <path d="M19 24 L29 24 M20 32 L28 32 M19 44 L29 44 M20 52 L28 52"/>
+                </svg>
+                <span class="caption">research</span>
+            </a>
 
-                <div class="edu-card">
-                    <h3>University of North Carolina at Asheville</h3>
-                    <p><strong>Year:</strong> 2023-2024</p>
-                    <p><strong>Degree: </strong>Computer Science B.S.</p>
-                    <p><strong>GPA:</strong> 3.98</p>
-                    <p><strong>Extracurriculars:</strong></p>
-                    <ul>
-                        <li>Undergraduate Research w/ Dr. Evelyn Chiang</li>
-                        <li>VP of Diversity, Equity, and Inclusion in the Inter-Greek Council</li>
-                        <li>President and Founder of Climbing Club</li>
-                        <li>Sigma Nu Scholarship Chair</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            <!-- projects: a laptop with a sprout -->
+            <a href="projects.html" class="tile">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <ellipse class="tint" cx="50" cy="88" rx="34" ry="5"/>
+                    <path class="fill" d="M24 30 C24 26, 27 24, 30 24 L70 24 C73 24, 76 26, 76 30 L76 66 L24 66 Z"/>
+                    <path class="fill" d="M14 72 L86 72 C86 78, 82 82, 76 82 L24 82 C18 82, 14 78, 14 72 Z"/>
+                    <path d="M24 66 L14 72 M76 66 L86 72"/>
+                    <path d="M42 76 L58 76"/>
+                    <path d="M34 40 L40 46 L34 52"/>
+                    <path d="M44 54 L56 54"/>
+                    <path d="M62 44 c0 -8, 6 -12, 12 -12 c0 8, -6 12, -12 12 Z"/>
+                    <path d="M62 44 L62 56"/>
+                    <path d="M62 50 c-6 0, -9 -3, -10 -8 c6 0, 9 3, 10 8 Z"/>
+                </svg>
+                <span class="caption">projects</span>
+            </a>
 
-        <!-- skills section -->
-        <section class="skills" id="skills">
-            <h2>Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3 class="card-title">Programming Languages</h3>
-                    <div class="skills-list" id="programming-skills-container"></div>
-                </div>
+            <!-- blog: a fountain pen writing on paper -->
+            <a href="blog.html" class="tile">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <ellipse class="tint" cx="50" cy="88" rx="32" ry="5"/>
+                    <path class="fill" d="M22 24 L66 20 L72 78 L28 82 Z"/>
+                    <path d="M32 36 L58 34 M33 44 L60 42 M34 52 L52 51 M35 60 L48 59"/>
+                    <path class="fill" d="M80 22 L88 30 L58 72 L50 76 L52 66 Z"/>
+                    <path d="M52 66 L58 72"/>
+                    <path d="M76 26 L84 34"/>
+                    <path d="M50 76 c-2 3, -4 4, -8 4"/>
+                </svg>
+                <span class="caption">blog</span>
+            </a>
 
-                <div class="skill-card">
-                    <h3 class="card-title">Data Analytics</h3>
-                    <div class="skills-list" id="research-skills-container"></div>
-                </div>
+            <!-- contact: a mailbox on a post -->
+            <a href="contact.html" class="tile">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                    <ellipse class="tint" cx="56" cy="90" rx="22" ry="4"/>
+                    <path d="M56 56 L56 88 M48 88 L64 88"/>
+                    <path class="fill" d="M24 36 L62 36 C72 36, 78 42, 78 50 L78 56 L24 56 Z"/>
+                    <path d="M24 36 C14 36, 10 42, 10 50 L10 56 L24 56"/>
+                    <path d="M30 56 L30 36"/>
+                    <path d="M68 42 L68 30 L76 30 L76 34 L70 34"/>
+                    <path d="M40 44 L54 44 M40 49 L50 49"/>
+                    <path d="M20 90 c3 -2, 6 -2, 8 0 M80 90 c3 -2, 6 -2, 8 0"/>
+                </svg>
+                <span class="caption">contact</span>
+            </a>
 
-                <div class="skill-card">
-                    <h3 class="card-title">IDEs and Tools</h3>
-                    <div class="skills-list" id="tools-skills-container"></div>
-                </div>
-            </div>
-        </section>
-    </div>
+            <a href="about.html" class="wordmark" aria-label="James Yang — about">
+                <span class="first">james</span>
+                <span class="last">yang</span>
+            </a>
+        </nav>
+    </main>
 
-    <!-- Work Experience Section -->
-    <div id="experience">
-        <h1>Work Experience</h1>
-        <div class="experience-grid">
-            <!-- Experience Card: WakeMed -->
-            <div class="experience-card">
-                <h2>Emergency Department Volunteer</h2>
-                <h3>WakeMed Cary Hospital</h3>
-                <p class="dates">August 2026 - Present</p>
-                <ul>
-                    <li>Supporting nurses and clinical staff with non-clinical tasks to help the emergency
-                        department operate smoothly and efficiently.</li>
-                    <li>Assisting patients and their families by providing comfort, wayfinding, and support
-                        throughout their visit.</li>
-                </ul>
-            </div>
-            <!-- Experience Card: AIAL -->
-            <div class="experience-card">
-                <h2>Research Assistant</h2>
-                <h3>NC State University - AI Assisted Learning Lab</h3>
-                <p class="dates">May 2026 - Present</p>
-                <ul>
-                    <li>Conducting comprehensive literature reviews across AI in education and neurosymbolic
-                        learning systems to keep the lab's research aligned with the latest advances in the field.</li>
-                    <li>Contributing to the writing and review of grant proposals for National Science Foundation (NSF) funding.</li>
-                    <li>Leading application design and prototyping to support and demonstrate grant proposals.</li>
-                </ul>
-            </div>
-            <!-- Experience Card 1 -->
-            <div class="experience-card">
-                <h2>RAPID Research Intern</h2>
-                <h3>UNC Chapel Hill - Carolina Health Informatics Program</h3>
-                <p class="dates">June - July 2025</p>
-                <ul>
-                    <li>Developed a novel deep learning–based tool for classifying biosynthetic gene clusters within plants, 
-                        achieving 94.8% accuracy and demonstrating performance rivaling existing rule-based methods.</li>
-                    <li>Worked closely with medical doctors in both lecture and hospital settings, identifying areas of 
-                        research within medicine and biology.</li>
-                    <li>Concluded with a research poster and oral presentation presented to faculty members, 
-                        clinicians, and departmental leaders.
-                    </li>
-                </ul>
-            </div>
-            <!-- Experience Card 2 -->
-            <div class="experience-card">
-                <h2>Master Data Intern</h2>
-                <h3>ABB</h3>
-                <p class="dates">January - May 2025</p>
-                <ul>
-                    <li>Collaborating with Global Product Managers to improve the quality of product master data while using analytical
-                    skills to identify and address discrepancies and inaccuracies.</li>
-                    <li>Evaluating product data quality, focusing on product lines, and establish connections between product lines, PGs,
-                    and product codes to ensure organizational consistency</li>
-                    <li>Documenting processes, issues, and resolutions, and generating reports using PowerBI to support decision-making.</li>
-                </ul>
-            </div>
-            <!-- Experience Card 3 -->
-            <div class="experience-card">
-                <h2>Undergraduate Research Assistant</h2>
-                <h3>UNC Asheville</h3>
-                <p class="dates">September 2023 - May 2024</p>
-                <ul>
-                    <li>Collaborated with a small team of determined individuals to aid AAPI students in their college experience.</li>
-                    <li> Implemented Excel to gather and analyze data, performing exploratory data analysis to uncover patterns and
-                    insights into student experiences on campus.</li>
-                    <li>Displayed and presented research findings at the Undergraduate Research Symposium, communicating data-driven
-                    insights through visual aids and a detailed explanation of the analysis process.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Publications Section -->
-    <div class="pub-container" id="research">
-        <h1>Research</h1>
-        <p class="scholar-link"><a href="https://scholar.google.com/citations?user=M_jJZCEAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p>
-
-        <div class="pub-grid">
-            <!-- DeepDTF paper -->
-            <div class="pub-card">
-                <div class="pub-card-content">
-                    <div class="pub-tags-container">
-                        <span class="pub-tag">arXiv Preprint</span>
-                        <span class="pub-tag">Deep Learning</span>
-                        <span class="pub-tag">Computational Biology</span>
-                    </div>
-                    <h3>DeepDTF: Dual-Branch Transformer Fusion for Multi-Omics Anticancer Drug Response Prediction</h3>
-                    <p class="pub-card-description">
-                        An end-to-end dual-branch Transformer fusion framework for anticancer drug response prediction. It pairs
-                        modality-specific multi-omics cell-line encoders with a GNN-Transformer drug branch, and provides
-                        biologically grounded explanations through SHAP-based gene attributions and pathway enrichment.
-                    </p>
-                    <div class="pub-card-footer">
-                        <a href="https://arxiv.org/abs/2603.24265" class="pub-button" target="_blank" rel="noopener noreferrer">View on arXiv</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 1 -->
-            <div class="pub-card">
-                <div class="pub-image-container">
-                    <img src="images/presentation.jpeg" alt="Oral presentation on marketing diversity research" class="pub-image">
-                </div>
-                <div class="pub-card-content">
-                    <div class="pub-tags-container">
-                        <span class="pub-tag">Oral Presentation</span>
-                        <span class="pub-tag">Social & Behavioral Research</span>
-                        <span class="pub-tag">Psychology</span>
-                    </div>
-                    <h3>Marketing Diversity: Photographing Students of Color on PWI Campuses.</h3>
-                    <p class="pub-card-description">
-                        Conducted a visual analysis of university marketing materials to examine how students of color are portrayed in recruitment
-                        content. Completed CITI Social & Behavioral Research certification to uphold ethical standards in handling sensitive
-                        information.
-                    </p>
-                    <div class="pub-card-footer">
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="pub-card">
-                <div class="pub-image-container">
-                    <img src="images/poster.jpeg" alt="Poster presentation on AAPI students' experience of microaggressions" class="pub-image">
-                </div>
-                <div class="pub-card-content">
-                    <div class="pub-tags-container">
-                        <span class="pub-tag">Poster Presentation</span>
-                        <span class="pub-tag">Social & Behavioral Research</span>
-                        <span class="pub-tag">Psychology</span>
-                    </div>
-                    <h3>“I Really Shouldn't Complain”: AAPI College Students' Experience of Microaggressions.</h3>
-                    <p class="pub-card-description">
-                        Investigated how Asian American and Pacific Islander (AAPI) students perceive and respond to microaggressions in higher
-                        education settings, using qualitative interview data.
-                    </p>
-                    <div class="pub-card-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Projects Section -->
-    <div id="projects">
-        <h1>Projects</h1>
-        <div class="project">
-            <figure class="image">
-            <img src="images/NYC.png" alt="FluxBiz Insights project">
-            </figure>
-                <div class="project-info">
-                    <h3>FluxBiz Insights</h3>
-                    <p><b>Languages/Tools:</b> Python, Pandas, NumPy, Scikit-learn, Tableau, Excel</p>
-                    <p><b>Description:</b> Developed a program that generates predictive insights for retail businesses from traffic data with a team of 3
-                    developers. Cleaned and organized 5 datasets with over 600,000 total elements with Excel and Python utilizing Pandas and
-                    NumPy, fit a linear regression model with Scikit-learn, and produced data visualizations in Tableau. Presented to a panel of data scientists at the CDC Datathon, placing 5th out of over 200 competitors.</p>
-                <a href="https://github.com/jbyng/CDC_2024"
-                    class="button" target="_blank"><img src="images/github.svg" alt="Github Logo"></a>
-                </div>
-        </div>
-
-        <div class="project">
-            <figure class="image">
-            <img src="images/sage.png" alt="Sage AI project">
-            </figure>
-                <div class="project-info">
-                    <h3>Sage AI</h3>
-                    <p><b>Languages/Tools:</b> Python, PyTorch, OpenCV, MediaPipe, Streamlit, Docker</p>
-                    <p><b>Description:</b> Developed a public web application that utilizes computer vision to perform real-time pose estimation for the
-                    purpose of improving study and work habits. Tracks eye and head positions to provide users with insight on their level of focus. Additional functionality allows users to import prerecorded videos for posture detection.</p>
-                <a href="https://github.com/jbyng/Sage-AI"
-                    class="button" target="_blank"><img src="images/github.svg" alt="Github Logo"></a>
-                </div>
-        </div>
-    </div>
-
-    <!-- Footer with Contact Info -->
-    <footer>
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <a href="mailto:jbyang2@ncsu.edu" class="email-button" target="_blank" rel="noopener noreferrer">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                        <path d="M22 6C22 5.44772 21.5523 5 21 5H3C2.44772 5 2 5.44772 2 6V18C2 18.5523 2.44772 19 3 19H21C21.5523 19 22 18.5523 22 18V6ZM20 7.23861V16.7614L12 11.0769L4 16.7614V7.23861L12 12.9231L20 7.23861Z"/>
-                    </svg>
-                    Email
-                </a>
-            <p>
-                <a href="https://www.linkedin.com/in/james-yang-3a3a6228b" class="linkedin-button" target="_blank" rel="noopener noreferrer">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.327-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.153V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.462 2.462 0 0 1-2.463-2.463c0-1.365 1.052-2.463 2.463-2.463 1.365 0 2.463 1.098 2.463 2.463 0 1.365-1.098 2.463-2.463 2.463zm1.852 13.019H3.485V9h3.704v11.452zM22.227 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.456c.98 0 1.773-.773 1.773-1.729V1.729C24 .774 23.207 0 22.227 0z"/>
-                    </svg>
-                    LinkedIn
-                </a>
-            </p>
-            <p>
-                <a href="https://scholar.google.com/citations?user=M_jJZCEAAAAJ&hl=en" class="scholar-button" target="_blank" rel="noopener noreferrer">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                        <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"/>
-                    </svg>
-                    Google Scholar
-                </a>
-            </p>
-        </section>
+    <footer class="site-footer">
+        <p>Copyright &copy; 2026 James Yang &middot; <a href="mailto:jbyang2@ncsu.edu">jbyang2@ncsu.edu</a></p>
     </footer>
-
-
-    <script>
-    fetch('skills.json')
-      .then(response => response.json())
-      .then(data => {
-        // function to populate a specific container
-        const populateSkills = (containerId, category) => {
-          const container = document.getElementById(containerId);
-          if (!container) {
-              console.error(`Container with ID '${containerId}' not found.`);
-              return; // exit if container doesn't exist
-          }
-
-          const categorySkills = data.skills.filter(skill => skill.category === category);
-
-          categorySkills.forEach(skill => {
-            const skillItem = document.createElement('span');
-            skillItem.className = 'skill-item';
-
-            // create the image element for the icon
-            const skillIcon = document.createElement('img');
-            skillIcon.src = skill.icon;
-            skillIcon.alt = `${skill.name} icon`;
-            skillIcon.className = 'skill-icon';
-
-            // create the text node for the skill name
-            const skillNameText = document.createTextNode(skill.name);
-
-            // append the icon and then the name to the skill item
-            skillItem.appendChild(skillIcon);
-            skillItem.appendChild(skillNameText);
-
-            container.appendChild(skillItem);
-          });
-        };
-
-        // Call populateSkills for each category
-        populateSkills('programming-skills-container', 'Programming Language');
-        populateSkills('research-skills-container', 'Data Analytics');
-        populateSkills('tools-skills-container', 'IDEs and Tools');
-
-      })
-      .catch(error => console.error('Error loading skills:', error));
-</script>
-<script>
-  // Reveal elements when they enter the viewport
-  function revealOnScroll() {
-    const reveals = document.querySelectorAll('.reveal');
-    const windowHeight = window.innerHeight;
-    
-    reveals.forEach(el => {
-      const elementTop = el.getBoundingClientRect().top;
-      const revealPoint = 100;
-
-      if (elementTop < windowHeight - revealPoint) {
-        el.classList.add('active');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll); // in case it's already in view on load
-</script>
 </body>
 </html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About · James Yang</title>
+    <link rel="icon" type="image/png" href="/images/helloworld2-removebg-preview.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="wordmark"><span class="first">james</span><span class="last">yang</span></a>
+        <ul class="site-nav">
+            <li><a href="index.html">home</a></li>
+            <li><a href="about.html" aria-current="page">about</a></li>
+            <li><a href="experience.html">experience</a></li>
+            <li><a href="research.html">research</a></li>
+            <li><a href="projects.html">projects</a></li>
+            <li><a href="blog.html">blog</a></li>
+            <li><a href="contact.html">contact</a></li>
+        </ul>
+    </header>
+
+    <main class="page">
+        <h1 class="page-title">About</h1>
+
+        <div class="two-col">
+            <img src="images/bryce1.JPG" alt="James (Bryce) Yang rock climbing">
+            <div>
+                <p class="lede">I'm James (Bryce) Yang, a senior majoring in computer science and minoring in statistics at NC State University (go pack!).</p>
+                <p>I'm deeply passionate about applied machine learning in medicine and computational biology, which I plan to pursue in medical school and beyond. When I'm not doing research, I invest my time in rock climbing via competing and coaching the NCSU Competitive Rock Climbing Team. I have competed in the North American Cup Series for Bouldering, as well as Sport &amp; Bouldering Combined Nationals.</p>
+                <p>I was recently named a 2026 recipient of the <a href="https://engr.ncsu.edu/news/2026/05/18/yang-receives-goldwater-scholarship/" target="_blank" rel="noopener noreferrer">Barry M. Goldwater Scholarship</a>.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Education</h2>
+        <div class="entry-grid">
+            <div class="entry">
+                <h2>North Carolina State University</h2>
+                <p class="where">Computer Science B.S., GPA 4.00</p>
+                <p class="when">2023 – 2027</p>
+                <p><strong>Courses:</strong> Machine Learning, Linear Algebra, Data Structures, Algorithms, Software Development Fundamentals, Calculus I–III, Calculus-Based Statistics, Discrete Mathematics, Object Oriented Programming, Computing Environments</p>
+                <ul>
+                    <li>Pack Climbing — Competitive Team Head Coach</li>
+                    <li>Pack Climbing — Treasurer</li>
+                </ul>
+            </div>
+            <div class="entry">
+                <h2>University of North Carolina at Asheville</h2>
+                <p class="where">Computer Science B.S., GPA 3.98</p>
+                <p class="when">2023 – 2024</p>
+                <ul>
+                    <li>Undergraduate Research with Dr. Evelyn Chiang</li>
+                    <li>VP of Diversity, Equity, and Inclusion in the Inter-Greek Council</li>
+                    <li>President and Founder of Climbing Club</li>
+                    <li>Sigma Nu Scholarship Chair</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div>
+                <h3>Programming Languages</h3>
+                <div class="skills-list" id="programming-skills-container"></div>
+            </div>
+            <div>
+                <h3>Data Analytics</h3>
+                <div class="skills-list" id="research-skills-container"></div>
+            </div>
+            <div>
+                <h3>IDEs and Tools</h3>
+                <div class="skills-list" id="tools-skills-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Copyright &copy; 2026 James Yang &middot; <a href="mailto:jbyang2@ncsu.edu">jbyang2@ncsu.edu</a></p>
+    </footer>
+
+    <script>
+    fetch('skills.json')
+      .then(response => response.json())
+      .then(data => {
+        const populateSkills = (containerId, category) => {
+          const container = document.getElementById(containerId);
+          if (!container) return;
+          data.skills.filter(skill => skill.category === category).forEach(skill => {
+            const skillItem = document.createElement('span');
+            skillItem.className = 'skill-item';
+            const skillIcon = document.createElement('img');
+            skillIcon.src = skill.icon;
+            skillIcon.alt = '';
+            skillIcon.className = 'skill-icon';
+            skillItem.appendChild(skillIcon);
+            skillItem.appendChild(document.createTextNode(skill.name));
+            container.appendChild(skillItem);
+          });
+        };
+        populateSkills('programming-skills-container', 'Programming Language');
+        populateSkills('research-skills-container', 'Data Analytics');
+        populateSkills('tools-skills-container', 'IDEs and Tools');
+      })
+      .catch(error => console.error('Error loading skills:', error));
+    </script>
+</body>
+</html>
